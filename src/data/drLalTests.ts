@@ -1,0 +1,1040 @@
+export const drLalTests = [
+  {
+    "id": "LAL-1000",
+    "name": "COMPLETE BLOOD COUNT (CBC)",
+    "category": "Individual Test",
+    "price": 350,
+    "discountPrice": 350,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1001",
+    "name": "HbA1c; GLYCOSYLATED HEMOGLOBIN",
+    "category": "Individual Test",
+    "price": 430,
+    "discountPrice": 430,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1002",
+    "name": "THYROID PROFILE TOTAL",
+    "category": "Individual Test",
+    "price": 540,
+    "discountPrice": 540,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1003",
+    "name": "URINE EXAMINATION, ROUTINE; URINE, R/E",
+    "category": "Individual Test",
+    "price": 120,
+    "discountPrice": 120,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1004",
+    "name": "GLUCOSE, FASTING (F) AND POST MEAL (PP), 2 HOURS",
+    "category": "Individual Test",
+    "price": 150,
+    "discountPrice": 150,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1005",
+    "name": "LIVER FUNCTION TEST (LFT)",
+    "category": "Individual Test",
+    "price": 790,
+    "discountPrice": 790,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1006",
+    "name": "KIDNEY FUNCTION TEST (KFT)",
+    "category": "Individual Test",
+    "price": 840,
+    "discountPrice": 840,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1007",
+    "name": "LIPID PROFILE BASIC",
+    "category": "Individual Test",
+    "price": 990,
+    "discountPrice": 990,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1008",
+    "name": "GLUCOSE, FASTING (F)",
+    "category": "Individual Test",
+    "price": 80,
+    "discountPrice": 80,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1009",
+    "name": "C-REACTIVE PROTEIN; CRP",
+    "category": "Individual Test",
+    "price": 430,
+    "discountPrice": 430,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1010",
+    "name": "LIVER & KIDNEY PANEL",
+    "category": "Health Package",
+    "price": 1530,
+    "discountPrice": 1530,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1011",
+    "name": "CULTURE URINE",
+    "category": "Individual Test",
+    "price": 840,
+    "discountPrice": 840,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1012",
+    "name": "HCG, BETA, TOTAL, QUANTITATIVE, MATERNAL",
+    "category": "Individual Test",
+    "price": 690,
+    "discountPrice": 690,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1013",
+    "name": "VITAMIN D 25 - HYDROXY",
+    "category": "Individual Test",
+    "price": 1530,
+    "discountPrice": 1530,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1014",
+    "name": "VITAMIN B12; CYANOCOBALAMIN",
+    "category": "Individual Test",
+    "price": 1180,
+    "discountPrice": 1180,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1015",
+    "name": "ESR; ERYTHROCYTE SEDIMENTATION RATE",
+    "category": "Individual Test",
+    "price": 140,
+    "discountPrice": 140,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1016",
+    "name": "CREATININE, SERUM",
+    "category": "Individual Test",
+    "price": 150,
+    "discountPrice": 150,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1017",
+    "name": "TSH (THYROID STIMULATING HORMONE)",
+    "category": "Individual Test",
+    "price": 200,
+    "discountPrice": 200,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1018",
+    "name": "URIC ACID, SERUM",
+    "category": "Individual Test",
+    "price": 160,
+    "discountPrice": 160,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1019",
+    "name": "HEMOGLOBIN; Hb",
+    "category": "Individual Test",
+    "price": 110,
+    "discountPrice": 110,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1020",
+    "name": "TSH (THYROID STIMULATING HORMONE), ULTRASENSITIVE",
+    "category": "Individual Test",
+    "price": 370,
+    "discountPrice": 370,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1021",
+    "name": "DENGUE FEVER NS1 ANTIGEN, EIA",
+    "category": "Individual Test",
+    "price": 750,
+    "discountPrice": 750,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1022",
+    "name": "GLUCOSE, POST PRANDIAL (PP), 2 HOURS",
+    "category": "Individual Test",
+    "price": 90,
+    "discountPrice": 90,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1023",
+    "name": "MALARIA PARASITE / BLOOD PARASITE IDENTIFICATION",
+    "category": "Individual Test",
+    "price": 130,
+    "discountPrice": 130,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1024",
+    "name": "IRON STUDIES",
+    "category": "Individual Test",
+    "price": 540,
+    "discountPrice": 540,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1025",
+    "name": "THYROID PROFILE, FREE",
+    "category": "Individual Test",
+    "price": 940,
+    "discountPrice": 940,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1026",
+    "name": "SGPT; ALANINE AMINOTRANSFERASE (ALT)",
+    "category": "Individual Test",
+    "price": 190,
+    "discountPrice": 190,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1027",
+    "name": "HIV 1 & 2 ANTIBODIES SCREENING TEST",
+    "category": "Individual Test",
+    "price": 520,
+    "discountPrice": 520,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1028",
+    "name": "SWASTH PLUS VITAMIN PANEL",
+    "category": "Health Package",
+    "price": 1770,
+    "discountPrice": 1770,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1029",
+    "name": "GLUCOSE, RANDOM (R)",
+    "category": "Individual Test",
+    "price": 80,
+    "discountPrice": 80,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1030",
+    "name": "BLOOD GROUP ABO & RH FACTOR",
+    "category": "Individual Test",
+    "price": 140,
+    "discountPrice": 140,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1031",
+    "name": "WIDAL SLIDE AGGLUTINATION TEST",
+    "category": "Individual Test",
+    "price": 290,
+    "discountPrice": 290,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1032",
+    "name": "FERRITIN",
+    "category": "Individual Test",
+    "price": 650,
+    "discountPrice": 650,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1033",
+    "name": "SWASTHFIT COMPLETE HEALTH CHECK- NEW",
+    "category": "Health Package",
+    "price": 5020,
+    "discountPrice": 5020,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1034",
+    "name": "PROLACTIN, SERUM",
+    "category": "Individual Test",
+    "price": 590,
+    "discountPrice": 590,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1035",
+    "name": "FEVER PANEL 1",
+    "category": "Health Package",
+    "price": 640,
+    "discountPrice": 640,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1036",
+    "name": "CALCIUM, SERUM",
+    "category": "Individual Test",
+    "price": 190,
+    "discountPrice": 190,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1037",
+    "name": "CHOLESTEROL TOTAL",
+    "category": "Individual Test",
+    "price": 170,
+    "discountPrice": 170,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1038",
+    "name": "PLATELET COUNT",
+    "category": "Individual Test",
+    "price": 100,
+    "discountPrice": 100,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1039",
+    "name": "PROTHROMBIN TIME STUDIES",
+    "category": "Individual Test",
+    "price": 340,
+    "discountPrice": 340,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1040",
+    "name": "SODIUM, SERUM",
+    "category": "Individual Test",
+    "price": 190,
+    "discountPrice": 190,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1041",
+    "name": "HEMOGRAM",
+    "category": "Individual Test",
+    "price": 410,
+    "discountPrice": 410,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1042",
+    "name": "POTASSIUM, SERUM",
+    "category": "Individual Test",
+    "price": 190,
+    "discountPrice": 190,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1043",
+    "name": "ELECTROLYTES, SERUM",
+    "category": "Individual Test",
+    "price": 390,
+    "discountPrice": 390,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1044",
+    "name": "RHEUMATOID FACTOR (RA), SERUM",
+    "category": "Individual Test",
+    "price": 450,
+    "discountPrice": 450,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1045",
+    "name": "SWASTHFIT SUPER 2-NEW",
+    "category": "Health Package",
+    "price": 2360,
+    "discountPrice": 2360,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1046",
+    "name": "TESTOSTERONE, TOTAL",
+    "category": "Individual Test",
+    "price": 690,
+    "discountPrice": 690,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1047",
+    "name": "SGOT; ASPARTATE AMINOTRANSFERASE (AST)",
+    "category": "Individual Test",
+    "price": 190,
+    "discountPrice": 190,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1048",
+    "name": "URINE EXAMINATION, ROUTINE; URINE R/E, AUTOMATED",
+    "category": "Individual Test",
+    "price": 180,
+    "discountPrice": 180,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1049",
+    "name": "HEPATITIS B SURFACE ANTIGEN (HBSAG),QUALITATIVE",
+    "category": "Individual Test",
+    "price": 540,
+    "discountPrice": 540,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1050",
+    "name": "SWASTHFIT COMPLETE PACKAGE - NEW",
+    "category": "Health Package",
+    "price": 5020,
+    "discountPrice": 5020,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1051",
+    "name": "ANTI MULLERIAN HORMONE; AMH",
+    "category": "Individual Test",
+    "price": 2120,
+    "discountPrice": 2120,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1052",
+    "name": "PSA (PROSTATE - SPECIFIC ANTIGEN), TOTAL",
+    "category": "Individual Test",
+    "price": 790,
+    "discountPrice": 790,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1053",
+    "name": "CORTISOL, SERUM (MORNING SAMPLE)",
+    "category": "Individual Test",
+    "price": 590,
+    "discountPrice": 590,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1054",
+    "name": "INSULIN, FASTING",
+    "category": "Individual Test",
+    "price": 790,
+    "discountPrice": 790,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1055",
+    "name": "HEPATITIS C ANTIBODY (Anti-HCV)",
+    "category": "Individual Test",
+    "price": 1580,
+    "discountPrice": 1580,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1056",
+    "name": "FSH & LH",
+    "category": "Individual Test",
+    "price": 1080,
+    "discountPrice": 1080,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1057",
+    "name": "MAGNESIUM, SERUM",
+    "category": "Individual Test",
+    "price": 540,
+    "discountPrice": 540,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1058",
+    "name": "Swasthfit Advance Health Checkup - Full Body Checkup",
+    "category": "Health Package",
+    "price": 3940,
+    "discountPrice": 3940,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1059",
+    "name": "CULTURE, URINE ADVANTAGE",
+    "category": "Individual Test",
+    "price": 890,
+    "discountPrice": 890,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1060",
+    "name": "ANTI THYROID PEROXIDASE ANTIBODY; ANTI TPO",
+    "category": "Individual Test",
+    "price": 1480,
+    "discountPrice": 1480,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1061",
+    "name": "TYPHI DOT/ SALMONELLA TYPHI IGM",
+    "category": "Individual Test",
+    "price": 440,
+    "discountPrice": 440,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1062",
+    "name": "SARS-COV-2 (COVID-19) QUALITATIVE REAL TIME RE-PCR",
+    "category": "Individual Test",
+    "price": 490,
+    "discountPrice": 490,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1063",
+    "name": "STOOL EXAMINATION, ROUTINE; STOOL, R/E",
+    "category": "Individual Test",
+    "price": 130,
+    "discountPrice": 130,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1064",
+    "name": "IMMUNOGLOBULIN IgE, SERUM",
+    "category": "Individual Test",
+    "price": 890,
+    "discountPrice": 890,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1065",
+    "name": "MICROALBUMIN / ALBUMIN, 1ST MORNING / RANDOM URINE",
+    "category": "Individual Test",
+    "price": 590,
+    "discountPrice": 590,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1066",
+    "name": "HEMOGLOBIN HPLC/ELECTROPHORESIS",
+    "category": "Individual Test",
+    "price": 940,
+    "discountPrice": 940,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1067",
+    "name": "STD PANEL",
+    "category": "Health Package",
+    "price": 2960,
+    "discountPrice": 2960,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1068",
+    "name": "LIPID PROFILE EXTENDED",
+    "category": "Individual Test",
+    "price": 1480,
+    "discountPrice": 1480,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1069",
+    "name": "FEVER PANEL - ADVANCE",
+    "category": "Health Package",
+    "price": 1720,
+    "discountPrice": 1720,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1070",
+    "name": "C-REACTIVE PROTEIN, CARDIO; hsCRP",
+    "category": "Individual Test",
+    "price": 790,
+    "discountPrice": 790,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1071",
+    "name": "TYPHIDOT/SALMONELLA TYPHI IGG & IGM",
+    "category": "Individual Test",
+    "price": 890,
+    "discountPrice": 890,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1072",
+    "name": "T4, FREE; FT4",
+    "category": "Individual Test",
+    "price": 360,
+    "discountPrice": 360,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1073",
+    "name": "ESTRADIOL (E2), SERUM",
+    "category": "Individual Test",
+    "price": 690,
+    "discountPrice": 690,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1074",
+    "name": "HOMOCYSTEINE QUANTITATIVE, SERUM",
+    "category": "Individual Test",
+    "price": 990,
+    "discountPrice": 990,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1075",
+    "name": "RPR, SERUM",
+    "category": "Individual Test",
+    "price": 190,
+    "discountPrice": 190,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1076",
+    "name": "WIDAL TUBE AGGLUTINATION TEST",
+    "category": "Individual Test",
+    "price": 340,
+    "discountPrice": 340,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1077",
+    "name": "CA 125; OVARIAN CANCER MARKER",
+    "category": "Individual Test",
+    "price": 1280,
+    "discountPrice": 1280,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1078",
+    "name": "BLOOD PICTURE; PERIPHERAL BLOOD SMEAR EXAMINATION",
+    "category": "Individual Test",
+    "price": 160,
+    "discountPrice": 160,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1079",
+    "name": "ANTI CYCLIC CITRULLINATED PEPTIDE; ANTI CCP",
+    "category": "Individual Test",
+    "price": 1870,
+    "discountPrice": 1870,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1080",
+    "name": "ANTI NUCLEAR ANTIBODY / FACTOR (ANA/ANF),EIA",
+    "category": "Individual Test",
+    "price": 790,
+    "discountPrice": 790,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1081",
+    "name": "UREA, SERUM",
+    "category": "Individual Test",
+    "price": 140,
+    "discountPrice": 140,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1082",
+    "name": "DIABETES PANEL BASIC",
+    "category": "Health Package",
+    "price": 440,
+    "discountPrice": 440,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1083",
+    "name": "LIPASE",
+    "category": "Individual Test",
+    "price": 620,
+    "discountPrice": 620,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1084",
+    "name": "CA 19.9; PANCREATIC CANCER MARKER",
+    "category": "Individual Test",
+    "price": 1480,
+    "discountPrice": 1480,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1085",
+    "name": "PTH (PARATHYROID HORMONE), INTACT",
+    "category": "Individual Test",
+    "price": 1580,
+    "discountPrice": 1580,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1086",
+    "name": "ANTI NUCLEAR ANTIBODY / FACTOR (ANA / ANF),IFA(HEP-2)",
+    "category": "Individual Test",
+    "price": 2360,
+    "discountPrice": 2360,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1087",
+    "name": "AMYLASE, SERUM",
+    "category": "Individual Test",
+    "price": 490,
+    "discountPrice": 490,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": true,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1088",
+    "name": "PROGESTERONE, SERUM",
+    "category": "Individual Test",
+    "price": 590,
+    "discountPrice": 590,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1089",
+    "name": "PROTEIN - CREATININE RATIO, URINE",
+    "category": "Individual Test",
+    "price": 490,
+    "discountPrice": 490,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1090",
+    "name": "BILE ACID TOTAL, SERUM",
+    "category": "Individual Test",
+    "price": 1480,
+    "discountPrice": 1480,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1091",
+    "name": "CEA; CARCINO EMBRYONIC ANTIGEN",
+    "category": "Individual Test",
+    "price": 730,
+    "discountPrice": 730,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1092",
+    "name": "SWASTHFIT SUPER 4-NEW",
+    "category": "Health Package",
+    "price": 4040,
+    "discountPrice": 4040,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1093",
+    "name": "TESTOSTERONE PANEL, TOTAL & FREE",
+    "category": "Health Package",
+    "price": 2560,
+    "discountPrice": 2560,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": true,
+    "homeCollection": true,
+    "includedTests": [
+      "COMPLETE BLOOD COUNT (CBC)",
+      "LIPID PROFILE BASIC"
+    ]
+  },
+  {
+    "id": "LAL-1094",
+    "name": "HOMA-IR ; INSULIN RESISTANCE INDEX",
+    "category": "Individual Test",
+    "price": 910,
+    "discountPrice": 910,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1095",
+    "name": "STOOL EXAMINATION, OCCULT BLOOD",
+    "category": "Individual Test",
+    "price": 160,
+    "discountPrice": 160,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1096",
+    "name": "CK; CREATINE KINASE",
+    "category": "Individual Test",
+    "price": 1970,
+    "discountPrice": 1970,
+    "turnaroundTime": "12 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1097",
+    "name": "HELICOBACTER PYLORI ANTIGEN, RAPID STOOL TEST",
+    "category": "Individual Test",
+    "price": 1580,
+    "discountPrice": 1580,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  },
+  {
+    "id": "LAL-1098",
+    "name": "MALARIA VIVAX AND FALCIPARUM ANTIGEN",
+    "category": "Individual Test",
+    "price": 690,
+    "discountPrice": 690,
+    "turnaroundTime": "24 Hours",
+    "fastingRequired": false,
+    "homeCollection": true
+  }
+];
