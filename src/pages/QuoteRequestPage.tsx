@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDes
 import { Calculator, CheckCircle, Building2, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { syncToGoogleSheets } from "@/lib/googleSheets";
 
 const quoteSchema = z.object({
   companyName: z.string().optional(),
@@ -76,8 +77,21 @@ const QuoteRequestPage = () => {
 
   const onSubmit = async (data: QuoteFormData) => {
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
     const ref = `QT-${Date.now().toString().slice(-8)}`;
+    
+    // Sync to Google Sheets
+    await syncToGoogleSheets('inquiry', {
+      'ID': ref,
+      'Name': data.contactName,
+      'Email': data.email,
+      'Phone': data.phone,
+      'Subject': `Quote Request: ${data.inquiryType}`,
+      'Message': `Tests: ${data.tests.join(", ")}\nVolume: ${data.estimatedVolume || 'N/A'}\nNotes: ${data.additionalInfo || 'N/A'}${data.companyName ? `\nCompany: ${data.companyName}` : ''}`,
+      'Inquiry Type': data.inquiryType,
+      'Status': 'pending',
+      'Created At': new Date().toISOString()
+    });
+
     setQuoteRef(ref);
     setIsSubmitting(false);
     setIsSubmitted(true);

@@ -9,7 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, Loader2, ArrowLeft, Instagram, MessageCircle, CheckCircle2 } from "lucide-react";
-import { lovable } from "@/integrations/lovable/index";
 import logo from "@/assets/diagnostics-hub-logo.png";
 
 const WHATSAPP_NUMBER = "917649885936";
@@ -320,8 +319,11 @@ const AuthPage = () => {
                       className="w-full"
                       disabled={isLoading}
                       onClick={async () => {
-                        const { error } = await lovable.auth.signInWithOAuth("google", {
-                          redirect_uri: window.location.origin,
+                        const { error } = await supabase.auth.signInWithOAuth({
+                          provider: "google",
+                          options: {
+                            redirectTo: window.location.origin,
+                          },
                         });
                         if (error) {
                           toast({

@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { syncToGoogleSheets } from "@/lib/googleSheets";
 
 const WHATSAPP_NUMBER = "917649885936";
 const INSTAGRAM_URL = "https://www.instagram.com/diagnostics_hub?igsh=MzNzanJpN2tlODhs";
@@ -76,6 +77,19 @@ const ContactPage = () => {
       });
 
       if (error) throw error;
+
+      // Sync to Google Sheets
+      await syncToGoogleSheets('inquiry', {
+        'ID': refNum,
+        'Name': data.name,
+        'Email': data.email,
+        'Phone': data.phone || '',
+        'Subject': data.subject,
+        'Message': data.message,
+        'Inquiry Type': 'contact',
+        'Status': 'pending',
+        'Created At': new Date().toISOString()
+      });
 
       toast({
         title: "Message sent!",

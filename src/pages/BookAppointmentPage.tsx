@@ -22,6 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { tests, packages, formatINR } from "@/data/testsData";
 import { useCart } from "@/context/CartContext";
+import { syncToGoogleSheets } from "@/lib/googleSheets";
 
 const bookingSchema = z.object({
   firstName: z.string().min(2, "First name required").max(50),
@@ -176,6 +177,21 @@ const BookTestPage = () => {
       });
 
       if (error) throw error;
+
+      // Sync to Google Sheets
+      await syncToGoogleSheets('booking', {
+        'ID': refNum,
+        'Name': `${data.firstName} ${data.lastName}`,
+        'Email': data.email,
+        'Phone': data.phone,
+        'Test Type': effectiveLabName ? `${data.testType} [${effectiveLabName}]` : data.testType,
+        'Appointment Date': format(data.date, "yyyy-MM-dd"),
+        'Appointment Time': data.timeSlot,
+        'Address': data.address || 'Lab Visit',
+        'Message': data.notes || '',
+        'Status': 'pending',
+        'Created At': new Date().toISOString()
+      });
 
       setReferenceNumber(refNum);
       if (isCartMode) clearCart();

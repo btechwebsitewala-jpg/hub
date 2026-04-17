@@ -9,7 +9,7 @@ interface SEOHeadProps {
 }
 
 const SITE_NAME = "Diagnostics Hub";
-const BASE_URL = "https://pathwise-care-connect.lovable.app";
+const BASE_URL = "https://diagnosticshub.com";
 
 const SEOHead = ({ title, description, canonical, keywords, jsonLd }: SEOHeadProps) => {
   const fullTitle = `${title} | ${SITE_NAME}`;

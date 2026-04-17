@@ -844,10 +844,6 @@ const AdminPage = () => {
                   <p>{selectedItem.phone}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1.5 mb-1 tracking-wider font-bold uppercase text-[10px]"><Star className="h-3 w-3" /> Status</p>
-                  {getStatusBadge(selectedItem.status)}
-                </div>
-                <div>
                   <p className="text-sm text-muted-foreground">Date & Time</p>
                   <p>{new Date(selectedItem.appointment_date).toLocaleDateString('en-IN')} - {selectedItem.time_slot}</p>
                 </div>
@@ -861,7 +857,7 @@ const AdminPage = () => {
                       <TestTube2 className="h-4 w-4 text-primary" /> Booked Tests Summary
                     </p>
                     <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold text-[10px]">
-                      {selectedItem.test_type.split(' [')[0].split(' | ').length} Items
+                      {selectedItem.test_type.split(' [')[0].split(/[|,]/).filter(t => t.trim() !== "").length} Items
                     </Badge>
                   </div>
 
@@ -874,10 +870,10 @@ const AdminPage = () => {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
-                        {selectedItem.test_type.split(' [')[0].split(' | ').map((test, index) => (
+                        {selectedItem.test_type.split(' [')[0].split(/[|,]/).map(t => t.trim()).filter(t => t !== "").map((test, index) => (
                           <tr key={index} className="hover:bg-slate-50/50 transition-colors">
                             <td className="px-3 py-2.5 font-bold text-primary border-r border-slate-100 text-center">{index + 1}</td>
-                            <td className="px-3 py-2.5 font-medium text-slate-700">{test.trim()}</td>
+                            <td className="px-3 py-2.5 font-medium text-slate-700">{test}</td>
                           </tr>
                         ))}
                       </tbody>
