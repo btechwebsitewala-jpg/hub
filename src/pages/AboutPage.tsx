@@ -18,6 +18,7 @@ import {
   Send
 } from "lucide-react";
 import logo from "@/assets/diagnostics-hub-logo.png";
+import { LabLogos, LabNameAliases, DefaultLogo } from "@/components/ui/LabLogos";
 
 const WHATSAPP_NUMBER = "917649885936";
 const INSTAGRAM_URL = "https://www.instagram.com/diagnostics_hub?igsh=MzNzanJpN2tlODhs";
@@ -45,13 +46,15 @@ const certifications = [
 ];
 
 const partnerLabs = [
-  "Labwala Health Diagnostics",
   "Dr. Lal Path Lab",
   "Metropolis Lab",
   "Thyrocare Lab",
   "Pathkind Lab",
   "Redcliffe Lab",
   "Agilus Lab",
+  "Bharat Lab",
+  "Mateshwari Pathology",
+  "Labwala Health Diagnostics",
 ];
 
 const AboutPage = () => {
@@ -63,6 +66,23 @@ const AboutPage = () => {
         canonical="/about"
         keywords="about diagnostics hub rewa, NABL accredited lab, pathology lab team rewa, trusted diagnostic lab India, best pathology lab Rewa MP, diagnostic centers Rewa Madhya Pradesh"
       />
+      
+      {/* CSS for infinite marquee */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-container {
+          display: flex;
+          width: fit-content;
+          animation: marquee 30s linear infinite;
+        }
+        .marquee-container:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
       <section className="bg-gradient-to-br from-primary/5 to-secondary/5 py-12 md:py-20">
         <div className="container px-4">
           <div className="max-w-4xl mx-auto text-center">
@@ -168,22 +188,33 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Partner Labs */}
-      <section className="py-12 md:py-16 bg-muted/50">
-        <div className="container px-4">
+      {/* Partner Labs Slider */}
+      <section className="py-12 md:py-16 bg-muted/50 overflow-hidden">
+        <div className="container px-4 mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-4">Our Partner Labs</h2>
-          <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-8">
+          <p className="text-muted-foreground text-center max-w-2xl mx-auto">
             We collaborate with India's leading diagnostic laboratories to provide you with the best services
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 md:gap-4">
-            {partnerLabs.map((lab) => (
-              <Card key={lab} className="text-center p-4 hover:shadow-md transition-shadow">
-                <div className="h-10 w-10 md:h-12 md:w-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-2">
-                  <span className="text-primary font-bold text-sm">{lab.split(' ')[0][0]}</span>
-                </div>
-                <p className="text-xs md:text-sm font-medium text-foreground">{lab}</p>
-              </Card>
-            ))}
+        </div>
+        
+        <div className="relative">
+          <div className="marquee-container gap-4 md:gap-8 px-4">
+            {/* List twice for seamless infinite loop */}
+            {[...partnerLabs, ...partnerLabs].map((lab, index) => {
+              // Match lab name with its logo component, handling aliases
+              const officialName = LabNameAliases[lab] || lab;
+              // @ts-ignore - dynamic key access
+              const LogoComponent = LabLogos[officialName] || DefaultLogo;
+
+              return (
+                <Card key={`${lab}-${index}`} className="flex-shrink-0 w-[200px] md:w-[280px] p-4 text-center hover:shadow-xl transition-all border-none bg-white shadow-sm flex flex-col items-center justify-center min-h-[140px]">
+                  <div className="w-full flex items-center justify-center mb-3">
+                    <LogoComponent className="w-full h-auto max-h-16 object-contain" />
+                  </div>
+                  <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-auto">{lab}</p>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>

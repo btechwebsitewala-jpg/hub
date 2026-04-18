@@ -130,6 +130,55 @@ export const RedcliffeLogo = ({ className = "w-full h-auto max-h-20" }: { classN
   </svg>
 );
 
+export const BharatLabLogo = ({ className = "w-full h-auto max-h-20" }: { className?: string }) => (
+  <svg viewBox="0 0 500 120" className={className} xmlns="http://www.w3.org/2000/svg">
+    <rect width="500" height="120" rx="8" fill="white" />
+    <g transform="translate(10, 10)">
+      {/* Molecule/DNA Icon */}
+      <g transform="translate(5, 5)">
+        {/* Connecting Lines */}
+        <line x1="20" y1="15" x2="45" y2="15" stroke="#f47920" strokeWidth="2" opacity="0.6" />
+        <line x1="20" y1="15" x2="10" y2="35" stroke="#a8b8c0" strokeWidth="2" opacity="0.6" />
+        <line x1="45" y1="15" x2="30" y2="35" stroke="#f47920" strokeWidth="2" opacity="0.6" />
+        <line x1="10" y1="35" x2="30" y2="35" stroke="#f47920" strokeWidth="2" opacity="0.6" />
+        <line x1="30" y1="35" x2="55" y2="35" stroke="#4d3284" strokeWidth="2" opacity="0.6" />
+        <line x1="30" y1="35" x2="20" y2="55" stroke="#f47920" strokeWidth="2" opacity="0.6" />
+        <line x1="55" y1="35" x2="40" y2="55" stroke="#4d3284" strokeWidth="2" opacity="0.6" />
+        <line x1="20" y1="55" x2="40" y2="55" stroke="#4d3284" strokeWidth="2" opacity="0.6" />
+        <line x1="40" y1="55" x2="65" y2="55" stroke="#008a45" strokeWidth="2" opacity="0.6" />
+        <line x1="20" y1="55" x2="15" y2="75" stroke="#f47920" strokeWidth="2" opacity="0.6" />
+        <line x1="40" y1="55" x2="35" y2="75" stroke="#008a45" strokeWidth="2" opacity="0.6" />
+        <line x1="15" y1="75" x2="35" y2="75" stroke="#008a45" strokeWidth="2" opacity="0.6" />
+        <line x1="35" y1="75" x2="25" y2="95" stroke="#008a45" strokeWidth="2" opacity="0.6" />
+
+        <circle cx="20" cy="15" r="5" fill="#a8b8c0" />
+        <circle cx="45" cy="15" r="5" fill="#f47920" />
+
+        <circle cx="10" cy="35" r="5" fill="#a8b8c0" />
+        <circle cx="30" cy="35" r="6" fill="#f47920" />
+        <circle cx="55" cy="35" r="6" fill="#4d3284" />
+
+        <circle cx="20" cy="55" r="6" fill="#f47920" />
+        <circle cx="40" cy="55" r="7" fill="#4d3284" />
+        <circle cx="65" cy="55" r="5" fill="#008a45" />
+
+        <circle cx="15" cy="75" r="7" fill="#f47920" />
+        <circle cx="35" cy="75" r="6" fill="#008a45" />
+
+        <circle cx="25" cy="95" r="7" fill="#008a45" />
+      </g>
+
+      {/* Text Part */}
+      <g transform="translate(85, 25)">
+        <text x="0" y="32" fill="#f47920" fontSize="50" fontWeight="900" fontFamily="sans-serif">BHARAT</text>
+        <text x="235" y="32" fill="#008a45" fontSize="50" fontWeight="900" fontFamily="sans-serif">LAB</text>
+        <text x="235" y="52" fill="#4b6271" fontSize="16" fontWeight="bold" fontFamily="sans-serif" letterSpacing="1">NETWORK</text>
+        <text x="135" y="85" fill="#003b8e" fontSize="24" fontStyle="italic" fontWeight="bold" fontFamily="serif" textAnchor="middle">Bharat hai toh Bharosa hai!</text>
+      </g>
+    </g>
+  </svg>
+);
+
 export const LabwalaLogo = ({ className = "w-full h-auto max-h-20" }: { className?: string }) => (
   <svg viewBox="0 0 400 100" className={className} xmlns="http://www.w3.org/2000/svg">
     <rect width="400" height="100" rx="4" fill="#080808" />
@@ -146,10 +195,27 @@ export const LabwalaLogo = ({ className = "w-full h-auto max-h-20" }: { classNam
   </svg>
 );
 
-export const DefaultLogo = ({ className = "w-14 h-14" }: { className?: string }) => (
+export const DefaultLogo = ({ className = "w-full h-auto" }: { className?: string }) => (
   <svg viewBox="0 0 240 80" className={className} xmlns="http://www.w3.org/2000/svg">
     <rect width="240" height="80" rx="8" fill="#e5e7eb" />
     <text x="120" y="48" fill="#6b7280" fontSize="20" fontWeight="bold" fontFamily="sans-serif" textAnchor="middle">Generic Lab</text>
+  </svg>
+);
+
+export const MateshwariLogo = ({ className = "w-full h-auto max-h-20" }: { className?: string }) => (
+  <svg viewBox="0 0 500 120" className={className} xmlns="http://www.w3.org/2000/svg">
+    <rect width="500" height="120" rx="8" fill="white" />
+    <g transform="translate(20, 10)">
+      <circle cx="45" cy="50" r="40" fill="#cc1f26" />
+      <g transform="translate(25, 30) scale(1.2)">
+        <path d="M 15 5 L 15 35 M 5 15 L 25 15 M 5 25 L 25 25" stroke="white" strokeWidth="4" />
+        <circle cx="15" cy="20" r="10" stroke="white" strokeWidth="3" fill="none" />
+      </g>
+      <g transform="translate(100, 20)">
+        <text x="0" y="35" fill="#cc1f26" fontSize="42" fontWeight="bold" fontFamily="sans-serif">Mateshwari</text>
+        <text x="0" y="75" fill="#1e3a8a" fontSize="32" fontWeight="bold" fontFamily="sans-serif">Pathology</text>
+      </g>
+    </g>
   </svg>
 );
 
@@ -161,5 +227,16 @@ export const LabLogos = {
   "Pathkind Labs": PathKindLogo,
   "Redcliffe Labs": RedcliffeLogo,
   "Agilus Diagnostics": AgilusLogo,
+  "Bharat Lab": BharatLabLogo,
+  "Mateshwari Pathology": MateshwariLogo,
   "Other Labs": DefaultLogo,
+};
+
+export const LabNameAliases: Record<string, string> = {
+  "Dr. Lal Path Lab": "Dr. Lal PathLabs",
+  "Metropolis Lab": "Metropolis Healthcare",
+  "Thyrocare Lab": "Thyrocare",
+  "Pathkind Lab": "Pathkind Labs",
+  "Redcliffe Lab": "Redcliffe Labs",
+  "Agilus Lab": "Agilus Diagnostics",
 };

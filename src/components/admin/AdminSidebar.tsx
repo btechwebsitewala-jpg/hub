@@ -1,9 +1,9 @@
 import { NavLink } from "@/components/NavLink";
-import { 
-  LayoutDashboard, 
-  Calendar, 
-  FileText, 
-  TestTube2, 
+import {
+  LayoutDashboard,
+  Calendar,
+  FileText,
+  TestTube2,
   Users,
   ChevronLeft,
   ChevronRight
@@ -35,7 +35,7 @@ const AdminSidebar = ({ activeTab, onTabChange }: AdminSidebarProps) => {
   };
 
   return (
-    <aside 
+    <aside
       className={cn(
         "bg-card border-r border-border h-full transition-all duration-300 flex flex-col",
         collapsed ? "w-16" : "w-64"
@@ -49,9 +49,9 @@ const AdminSidebar = ({ activeTab, onTabChange }: AdminSidebarProps) => {
             <p className="text-xs text-muted-foreground">Manage your lab</p>
           </div>
         )}
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setCollapsed(!collapsed)}
           className="h-8 w-8"
         >

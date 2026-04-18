@@ -26,7 +26,7 @@ const Footer = () => {
               />
               <div>
                 <h3 className="text-xl font-bold text-foreground">Diagnostics Hub</h3>
-                <p className="text-xs text-muted-foreground">Diagnostics Center</p>
+                <p className="text-xs text-muted-foreground">Diagnostics Company</p>
               </div>
             </Link>
             <p className="text-muted-foreground text-sm mb-4">

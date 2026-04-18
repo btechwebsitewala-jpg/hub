@@ -295,26 +295,7 @@ const ServiceDetailPage = () => {
             <div>
               <Card className="sticky top-24">
                 <CardContent className="p-4 md:p-6">
-                  <div className="text-center mb-6">
-                    <p className="text-sm text-muted-foreground mb-1">Price Range</p>
-                    <p className="text-2xl md:text-3xl font-bold text-primary">{service.price}</p>
-                  </div>
 
-                  <div className="space-y-4 mb-6">
-                    <div className="p-3 bg-muted/50 rounded-lg">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                        <Clock className="h-4 w-4" />
-                        Turnaround Time
-                      </div>
-                      <p className="font-semibold text-sm">{service.turnaround}</p>
-                    </div>
-                  </div>
-
-                  <Button size="lg" className="w-full mb-3" asChild>
-                    <Link to="/book-appointment">
-                      Book Test
-                    </Link>
-                  </Button>
 
                   <div className="flex gap-2">
                     <Button variant="outline" className="flex-1" asChild>
@@ -329,28 +310,6 @@ const ServiceDetailPage = () => {
                         Call
                       </a>
                     </Button>
-                  </div>
-
-                  <div className="border-t mt-6 pt-6">
-                    <h4 className="font-semibold text-sm mb-3">Why Choose Us?</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-success" />
-                        NABL Accredited Lab
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-success" />
-                        Expert Pathologists
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-success" />
-                        Home Sample Collection
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-success" />
-                        Digital Reports
-                      </li>
-                    </ul>
                   </div>
                 </CardContent>
               </Card>

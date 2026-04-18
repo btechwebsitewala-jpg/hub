@@ -158,7 +158,7 @@ const Header = () => {
             </Button>
             {user && (
               <Button variant="ghost" onClick={() => navigate("/dashboard")} className="text-primary hover:bg-primary/10">
-                <User className="h-4 w-4 mr-1.5" /> Dashboard
+                <User className="h-4 w-4 mr-1.5" /> My Bookings
               </Button>
             )}
             <Button variant="outline" onClick={() => navigate("/results-inquiry")} className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
@@ -209,7 +209,7 @@ const Header = () => {
                   className="text-foreground hover:text-primary font-medium py-2 flex items-center gap-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <User className="h-4 w-4" /> My Dashboard
+                  <User className="h-4 w-4" /> My Bookings
                 </Link>
               )}
               <Button 

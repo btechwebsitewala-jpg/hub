@@ -149,12 +149,7 @@ const ServicesPage = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    <Button asChild variant="default" size="sm" className="flex-1">
-                      <Link to="/tests">
-                        Book Now
-                      </Link>
-                    </Button>
-                    <Button asChild variant="outline" size="sm" className="group">
+                    <Button asChild variant="outline" size="sm" className="flex-1 group">
                       <Link to={`/services/${service.id}`}>
                         Details
                         <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-0.5 transition-transform" />

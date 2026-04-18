@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, Clock, Award, ArrowRight, CheckCircle2, FlaskConical } from "lucide-react";
+import { Shield, Clock, Award, ArrowRight, CheckCircle2, FlaskConical, MessageCircle, FileUp } from "lucide-react";
 import pathologyLabImg from "@/assets/pathology-lab-hero.jpg";
 import { useAuth } from "@/hooks/useAuth";
+
+const WHATSAPP_NUMBER = "917649885936";
+const WHATSAPP_MESSAGE = "Hi Diagnostics Hub, I want to share my doctor's prescription to book a test.";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -10,6 +13,11 @@ const HeroSection = () => {
 
   const handleBookAppointment = () => {
     navigate("/tests");
+  };
+
+  const handleWhatsAppChat = () => {
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+    window.open(url, "_blank");
   };
 
   return (
@@ -22,10 +30,10 @@ const HeroSection = () => {
 
       <div className="container relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          
+
           {/* Left Content */}
           <div className="animate-fade-in flex flex-col items-start">
-            
+
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-[#003B73] font-bold text-sm mb-7 hover:shadow-md transition-all cursor-default">
               <Award className="h-4 w-4 text-[#3B8B41]" />
@@ -57,10 +65,11 @@ const HeroSection = () => {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => navigate("/tests")}
-                className="gap-2 bg-white/50 backdrop-blur-sm border-2 border-[#003B73]/10 hover:border-[#003B73]/30 text-[#003B73] hover:bg-white text-base h-14 px-8 rounded-full shadow-sm hover:shadow-md transition-all"
+                onClick={handleWhatsAppChat}
+                className="gap-2 bg-success/10 border-2 border-success/20 hover:border-success/50 text-success hover:bg-success hover:text-white text-base h-14 px-8 rounded-full shadow-sm hover:shadow-md transition-all whitespace-nowrap"
               >
-                View All Tests
+                <FileUp className="h-5 w-5" />
+                Upload Dr. Prescription
               </Button>
             </div>
 
@@ -88,7 +97,7 @@ const HeroSection = () => {
           <div className="relative animate-slide-in-left lg:ml-auto" style={{ animationDelay: "0.2s" }}>
             {/* Image Glowing Backdrop */}
             <div className="absolute -inset-1 bg-gradient-to-tr from-[#38BDF8] to-[#4ADE80] rounded-[2rem] blur-xl opacity-30 animate-pulse" />
-            
+
             <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white">
               <img
                 src={pathologyLabImg}
@@ -116,7 +125,7 @@ const HeroSection = () => {
               </div>
             </div>
           </div>
-          
+
         </div>
       </div>
     </section>

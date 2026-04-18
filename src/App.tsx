@@ -34,29 +34,29 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/services/:serviceId" element={<ServiceDetailPage />} />
-            <Route path="/tests" element={<TestsPage />} />
-            <Route path="/test/:testSlug" element={<TestDetailPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/book-appointment" element={<BookAppointmentPage />} />
-            <Route path="/results-inquiry" element={<ResultsInquiryPage />} />
-            <Route path="/quote-request" element={<QuoteRequestPage />} />
-            <Route path="/help" element={<HelpPage />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/admin-login" element={<AdminLoginPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/services/:serviceId" element={<ServiceDetailPage />} />
+              <Route path="/tests" element={<TestsPage />} />
+              <Route path="/test/:testSlug" element={<TestDetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/book-appointment" element={<BookAppointmentPage />} />
+              <Route path="/results-inquiry" element={<ResultsInquiryPage />} />
+              <Route path="/quote-request" element={<QuoteRequestPage />} />
+              <Route path="/help" element={<HelpPage />} />
+              <Route path="/auth" element={<AuthPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/admin-login" element={<AdminLoginPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
         </TooltipProvider>
       </CartProvider>
     </QueryClientProvider>

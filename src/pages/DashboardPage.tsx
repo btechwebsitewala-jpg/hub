@@ -351,7 +351,7 @@ const DashboardPage = () => {
   return (
     <Layout>
       <SEOHead
-        title="My Dashboard"
+        title="My Bookings"
         description="View your test bookings, reports and profile at Diagnostics Hub Rewa."
         canonical="/dashboard"
         keywords="patient dashboard, diagnostic reports, test bookings, pathology lab rewa"
@@ -363,7 +363,7 @@ const DashboardPage = () => {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold text-foreground">
-                {profile?.first_name ? `Welcome, ${profile.first_name}!` : "My Dashboard"}
+                {profile?.first_name ? `Welcome, ${profile.first_name}!` : "My Bookings"}
               </h1>
               <p className="text-sm text-muted-foreground mt-1">
                 Manage your test bookings, reports & profile

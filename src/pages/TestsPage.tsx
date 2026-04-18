@@ -15,13 +15,14 @@ import { generateSlug } from "@/data/testsData";
 const FALLBACK_LOGO = "https://via.placeholder.com/60?text=Lab";
 
 const labs = [
-  { name: "Labwala Health Diagnostics", logo: "" },
   { name: "Dr. Lal PathLabs", logo: "" },
   { name: "Metropolis Healthcare", logo: "" },
   { name: "Thyrocare", logo: "" },
   { name: "Pathkind Labs", logo: "" },
   { name: "Redcliffe Labs", logo: "" },
   { name: "Agilus Diagnostics", logo: "" },
+  { name: "Bharat Lab", logo: "" },
+  { name: "Labwala Health Diagnostics", logo: "" },
   { name: "Other Labs", logo: "" }
 ];
 
@@ -50,11 +51,11 @@ export default function DiagnosticsUI() {
 
   // 👉 SECOND PAGE (Lab Details - View 200+ Tests)
   if (selectedLab) {
-    const activeTests = selectedLab === "Dr. Lal PathLabs" 
-      ? (drLalTests as typeof labTests) 
+    const activeTests = selectedLab === "Dr. Lal PathLabs"
+      ? (drLalTests as typeof labTests)
       : selectedLab === "Metropolis Healthcare"
-      ? (metropolisTests as typeof labTests)
-      : labTests;
+        ? (metropolisTests as typeof labTests)
+        : labTests;
 
     const filteredTests = activeTests.filter(test => {
       const matchesSearch = test.name.toLowerCase().includes(searchQuery.toLowerCase());
