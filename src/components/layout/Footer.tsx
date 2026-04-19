@@ -15,9 +15,9 @@ const Footer = () => {
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-4">
-              <img 
-                src={logo} 
-                alt="Diagnostics Hub Logo" 
+              <img
+                src={logo}
+                alt="Diagnostics Hub Logo"
                 className="h-12 w-12 rounded-lg object-cover shadow-sm"
                 loading="lazy"
                 decoding="async"
@@ -33,7 +33,7 @@ const Footer = () => {
               Your trusted partner in diagnostic healthcare. NABL accredited laboratory providing accurate and timely test results.
             </p>
             <div className="flex flex-wrap gap-2">
-              <a 
+              <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -42,7 +42,7 @@ const Footer = () => {
               >
                 <MessageCircle className="h-5 w-5" />
               </a>
-              <a 
+              <a
                 href={WHATSAPP_GROUP}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -51,7 +51,7 @@ const Footer = () => {
               >
                 <Users className="h-5 w-5" />
               </a>
-              <a 
+              <a
                 href={TELEGRAM_BOT}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -60,7 +60,7 @@ const Footer = () => {
               >
                 <Send className="h-5 w-5" />
               </a>
-              <a 
+              <a
                 href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noopener noreferrer"

@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import logo from "@/assets/diagnostics-hub-logo.png";
 import { LabLogos, LabNameAliases, DefaultLogo } from "@/components/ui/LabLogos";
+import PartnerLabs from "@/components/home/PartnerLabs";
 
 const WHATSAPP_NUMBER = "917649885936";
 const INSTAGRAM_URL = "https://www.instagram.com/diagnostics_hub?igsh=MzNzanJpN2tlODhs";
@@ -31,12 +32,7 @@ const values = [
   { icon: Eye, title: "Transparency", description: "Clear communication and transparent pricing policies" },
 ];
 
-const team = [
-  { name: "Dr. Rajesh Kumar", role: "Chief Pathologist", specialty: "Clinical Pathology", experience: "20+ years" },
-  { name: "Dr. Priya Sharma", role: "Senior Pathologist", specialty: "Anatomic Pathology", experience: "15+ years" },
-  { name: "Dr. Amit Gupta", role: "Molecular Pathologist", specialty: "Molecular Diagnostics", experience: "12+ years" },
-  { name: "Dr. Neha Singh", role: "Hematopathologist", specialty: "Hematology", experience: "18+ years" },
-];
+
 
 const certifications = [
   "NABL Accredited Laboratory",
@@ -45,17 +41,7 @@ const certifications = [
   "NABH Accredited",
 ];
 
-const partnerLabs = [
-  "Dr. Lal Path Lab",
-  "Metropolis Lab",
-  "Thyrocare Lab",
-  "Pathkind Lab",
-  "Redcliffe Lab",
-  "Agilus Lab",
-  "Bharat Lab",
-  "Mateshwari Pathology",
-  "Labwala Health Diagnostics",
-];
+
 
 const AboutPage = () => {
   return (
@@ -67,21 +53,7 @@ const AboutPage = () => {
         keywords="about diagnostics hub rewa, NABL accredited lab, pathology lab team rewa, trusted diagnostic lab India, best pathology lab Rewa MP, diagnostic centers Rewa Madhya Pradesh"
       />
       
-      {/* CSS for infinite marquee */}
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .marquee-container {
-          display: flex;
-          width: fit-content;
-          animation: marquee 30s linear infinite;
-        }
-        .marquee-container:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
+
 
       <section className="bg-gradient-to-br from-primary/5 to-secondary/5 py-12 md:py-20">
         <div className="container px-4">
@@ -188,36 +160,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Partner Labs Slider */}
-      <section className="py-12 md:py-16 bg-muted/50 overflow-hidden">
-        <div className="container px-4 mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-4">Our Partner Labs</h2>
-          <p className="text-muted-foreground text-center max-w-2xl mx-auto">
-            We collaborate with India's leading diagnostic laboratories to provide you with the best services
-          </p>
-        </div>
-        
-        <div className="relative">
-          <div className="marquee-container gap-4 md:gap-8 px-4">
-            {/* List twice for seamless infinite loop */}
-            {[...partnerLabs, ...partnerLabs].map((lab, index) => {
-              // Match lab name with its logo component, handling aliases
-              const officialName = LabNameAliases[lab] || lab;
-              // @ts-ignore - dynamic key access
-              const LogoComponent = LabLogos[officialName] || DefaultLogo;
-
-              return (
-                <Card key={`${lab}-${index}`} className="flex-shrink-0 w-[200px] md:w-[280px] p-4 text-center hover:shadow-xl transition-all border-none bg-white shadow-sm flex flex-col items-center justify-center min-h-[140px]">
-                  <div className="w-full flex items-center justify-center mb-3">
-                    <LogoComponent className="w-full h-auto max-h-16 object-contain" />
-                  </div>
-                  <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-auto">{lab}</p>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      <PartnerLabs />
 
       {/* Values */}
       <section className="py-12 md:py-16">
@@ -237,32 +180,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-12 md:py-16 bg-muted/50">
-        <div className="container px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-4">Our Expert Team</h2>
-          <p className="text-muted-foreground text-center max-w-2xl mx-auto mb-8 md:mb-12">
-            Led by board-certified pathologists with decades of experience in diagnostic medicine.
-          </p>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {team.map((member) => (
-              <Card key={member.name}>
-                <CardContent className="p-4 md:p-6 text-center">
-                  <div className="h-16 w-16 md:h-20 md:w-20 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mx-auto mb-4">
-                    <span className="text-lg md:text-2xl font-bold text-primary-foreground">
-                      {member.name.split(" ").map(n => n[0]).join("")}
-                    </span>
-                  </div>
-                  <h3 className="font-semibold text-foreground text-sm md:text-base">{member.name}</h3>
-                  <p className="text-primary text-xs md:text-sm mb-1">{member.role}</p>
-                  <p className="text-muted-foreground text-xs">{member.specialty}</p>
-                  <p className="text-muted-foreground text-xs mt-1">{member.experience}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Certifications */}
       <section className="py-12 md:py-16 bg-primary text-primary-foreground">

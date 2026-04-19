@@ -6,7 +6,8 @@ import HeroSection from "@/components/home/HeroSection";
 import QuickActions from "@/components/home/QuickActions";
 import DiagnosticShowcase from "@/components/home/DiagnosticShowcase";
 import ServicesSection from "@/components/home/ServicesSection";
-import TestsPreview from "@/components/home/TestsPreview";
+import PartnerLabs from "@/components/home/PartnerLabs";
+
 import WhyChooseSection from "@/components/home/WhyChooseSection";
 import AboutPreview from "@/components/home/AboutPreview";
 import CTASection from "@/components/home/CTASection";
@@ -25,8 +26,9 @@ const Index = () => {
       <Layout>
         <HeroSection />
         <DiagnosticShowcase />
+        <PartnerLabs />
         <ServicesSection />
-        <TestsPreview />
+
         <WhyChooseSection />
         <AboutPreview />
         <CTASection />

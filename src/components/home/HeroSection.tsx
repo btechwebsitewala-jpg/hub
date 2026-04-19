@@ -77,7 +77,7 @@ const HeroSection = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
               {[
                 { icon: Shield, label: "99.9%", sub: "Accuracy", color: "text-[#003B73]", bg: "bg-[#003B73]/10" },
-                { icon: Clock, label: "Same Day", sub: "Results", color: "text-[#3B8B41]", bg: "bg-[#3B8B41]/10" },
+                { icon: Clock, label: "Same Day", sub: "Reports", color: "text-[#3B8B41]", bg: "bg-[#3B8B41]/10" },
                 { icon: FlaskConical, label: "100+", sub: "Tests", color: "text-[#DE6F53]", bg: "bg-[#DE6F53]/10" },
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-3.5 bg-white/60 backdrop-blur-sm border border-white/60 p-3.5 rounded-2xl shadow-sm hover:bg-white hover:shadow-md transition-all">
