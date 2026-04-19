@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, Clock, Award, ArrowRight, CheckCircle2, FlaskConical, MessageCircle, FileUp } from "lucide-react";
+import { BannerCarousel } from "./BannerCarousel";
 import pathologyLabImg from "@/assets/pathology-lab-hero.jpg";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -33,6 +34,9 @@ const HeroSection = () => {
 
           {/* Left Content */}
           <div className="animate-fade-in flex flex-col items-start">
+
+            {/* Banner Slider */}
+            <BannerCarousel />
 
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-[#003B73] font-bold text-sm mb-7 hover:shadow-md transition-all cursor-default">
