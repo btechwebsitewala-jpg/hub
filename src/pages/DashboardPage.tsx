@@ -504,17 +504,13 @@ const DashboardPage = () => {
 
           {/* Tabs */}
           <Tabs defaultValue="bookings" className="space-y-4">
-            <TabsList className="w-full grid grid-cols-4 h-auto gap-0.5 p-1 bg-muted/60">
+            <TabsList className="w-full grid grid-cols-3 h-auto gap-0.5 p-1 bg-muted/60">
               <TabsTrigger value="bookings" className="gap-1 text-[10px] sm:text-sm py-2 px-1 sm:px-3 flex-col sm:flex-row">
                 <Calendar className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
                 <span>Bookings</span>
                 {(appointments.length + testBookings.length) > 0 && (
                   <Badge variant="secondary" className="h-4 min-w-[16px] p-0 justify-center text-[9px] rounded-full hidden sm:flex">{appointments.length + testBookings.length}</Badge>
                 )}
-              </TabsTrigger>
-              <TabsTrigger value="reports" className="gap-1 text-[10px] sm:text-sm py-2 px-1 sm:px-3 flex-col sm:flex-row">
-                <Download className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
-                <span>Reports</span>
               </TabsTrigger>
               <TabsTrigger value="inquiries" className="gap-1 text-[10px] sm:text-sm py-2 px-1 sm:px-3 flex-col sm:flex-row">
                 <FileText className="h-4 w-4 sm:h-3.5 sm:w-3.5" />
@@ -592,70 +588,6 @@ const DashboardPage = () => {
               </Card>
             </TabsContent>
 
-            {/* Reports Tab */}
-            <TabsContent value="reports">
-              <Card className="border-border/40">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Download className="h-5 w-5 text-primary" />
-                    My Reports
-                  </CardTitle>
-                  <CardDescription>Download your lab test reports</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {loading ? (
-                    <div className="text-center py-12"><Loader2 className="h-8 w-8 animate-spin mx-auto text-primary" /></div>
-                  ) : reports.length === 0 ? (
-                    <div className="text-center py-12">
-                      <FileText className="h-14 w-14 mx-auto text-muted-foreground/40 mb-3" />
-                      <p className="text-muted-foreground font-medium mb-1">No reports available</p>
-                      <p className="text-xs text-muted-foreground">Reports will appear here when your test results are ready</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {reports.map(report => {
-                        const apt = appointments.find(a => a.id === report.appointment_id);
-                        return (
-                          <div key={report.id} className="p-4 bg-muted/30 rounded-xl border border-border/30 hover:border-border/60 transition-colors">
-                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                                  <p className="font-semibold text-foreground text-sm">{apt?.test_type || "Lab Report"}</p>
-                                  <Badge variant="outline" className="bg-success/15 text-success border-success/30 text-xs capitalize">
-                                    {report.report_status || "Final"}
-                                  </Badge>
-                                </div>
-                                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
-                                  <span>Report #: <span className="font-medium text-foreground">{report.report_number}</span></span>
-                                  <span>{new Date(report.report_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
-                                  {apt && <span>Ref: {apt.reference_number}</span>}
-                                </div>
-                              </div>
-                              {report.file_url && !report.file_url.startsWith("data:") ? (
-                                <Button size="sm" variant="outline" className="flex-shrink-0" onClick={async () => {
-                                  const { data, error } = await supabase.storage
-                                    .from('medical-reports')
-                                    .createSignedUrl(report.file_url!, 300);
-                                  if (data?.signedUrl) {
-                                    window.open(data.signedUrl, '_blank');
-                                  } else {
-                                    toast({ title: "Error", description: "Could not generate download link.", variant: "destructive" });
-                                  }
-                                }}>
-                                  <Download className="h-4 w-4 mr-1.5" /> Download
-                                </Button>
-                              ) : (
-                                <Badge variant="secondary" className="text-xs flex-shrink-0">No file</Badge>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
 
             {/* Inquiries Tab */}
             <TabsContent value="inquiries">
