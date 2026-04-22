@@ -26,10 +26,10 @@ const OfferBanner = () => {
       <div className="flex animate-marquee hover:[animation-play-state:paused] w-max items-center relative z-10">
         {items.map((item, idx) => (
           <div key={idx} className="flex items-center gap-3 sm:gap-6 px-4 sm:px-8">
-            <div className="flex items-center gap-2 shrink-0 md:text-[15px] text-[14px]">
+            <div className="flex items-center gap-2 shrink-0 text-[11px] sm:text-[14px] md:text-[15px]">
               {item.icon}
               <span className="font-semibold tracking-wide text-white/95">{item.title}</span>
-              <span className={`px-3 py-1 rounded-full font-bold shadow-sm ml-2 text-[12px] sm:text-[13px] ${item.badgeColor} tracking-tight leading-none`}>
+              <span className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full font-bold shadow-sm ml-1 sm:ml-2 text-[9px] sm:text-[11px] md:text-[13px] ${item.badgeColor} tracking-tight leading-none`}>
                 {item.discount}
               </span>
             </div>

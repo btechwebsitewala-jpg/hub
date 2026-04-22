@@ -100,10 +100,23 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (item: CartItem) => {
     setCartItems((prev) => {
+      // Check if item already exists in cart
       if (prev.find((i) => i.id === item.id || i.name === item.name)) {
         toast.error("Test is already in the cart!");
         return prev;
       }
+
+      // Enforce "one lab at a time" rule
+      if (prev.length > 0) {
+        const currentLab = prev[0].labName || "Other Labs";
+        const newItemLab = item.labName || "Other Labs";
+        
+        if (currentLab !== newItemLab) {
+          toast.error(`You can only book tests from one lab at a time. Your cart currently contains tests from "${currentLab}". Please clear your cart to add tests from "${newItemLab}".`);
+          return prev;
+        }
+      }
+
       toast.success(`${item.name} added to cart!`);
       return [...prev, item];
     });

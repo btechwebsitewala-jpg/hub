@@ -51,11 +51,11 @@ const PartnerLabs = () => {
             const LogoComponent = LabLogos[officialName] || DefaultLogo;
 
             return (
-              <Card key={`${lab}-${index}`} className="flex-shrink-0 w-[200px] md:w-[280px] p-4 text-center hover:shadow-xl transition-all border-none bg-white shadow-sm flex flex-col items-center justify-center min-h-[140px]">
-                <div className="w-full flex items-center justify-center mb-3">
-                  <LogoComponent className="w-full h-auto max-h-16 object-contain" />
+              <Card key={`${lab}-${index}`} className="flex-shrink-0 w-[160px] xs:w-[200px] md:w-[280px] p-3 md:p-4 text-center hover:shadow-xl transition-all border-none bg-white shadow-sm flex flex-col items-center justify-center min-h-[110px] md:min-h-[140px]">
+                <div className="w-full flex items-center justify-center mb-2 md:mb-3">
+                  <LogoComponent className="w-full h-auto max-h-12 md:max-h-16 object-contain" />
                 </div>
-                <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-auto">{lab}</p>
+                <p className="text-[9px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mt-auto">{lab}</p>
               </Card>
             );
           })}

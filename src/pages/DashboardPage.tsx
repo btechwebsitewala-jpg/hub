@@ -307,10 +307,10 @@ const DashboardPage = () => {
     setLoading(true);
     try {
       const [aptsRes, inqRes, reportsRes, bookingsRes, profileRes] = await Promise.all([
-        supabase.from("appointments").select("*").order("appointment_date", { ascending: false }),
-        supabase.from("inquiries").select("*").order("created_at", { ascending: false }),
+        supabase.from("appointments").select("*").or(`email.eq.${user.email},user_id.eq.${user.id}`).order("created_at", { ascending: false }),
+        supabase.from("inquiries").select("*").or(`email.eq.${user.email},user_id.eq.${user.id}`).order("created_at", { ascending: false }),
         supabase.from("reports").select("*").order("created_at", { ascending: false }),
-        supabase.from("test_bookings").select("*").order("created_at", { ascending: false }),
+        supabase.from("test_bookings").select("*").or(`patient_email.eq.${user.email}`).order("created_at", { ascending: false }),
         supabase.from("profiles").select("first_name, last_name, email, phone, address, date_of_birth").eq("user_id", user.id).maybeSingle(),
       ]);
 

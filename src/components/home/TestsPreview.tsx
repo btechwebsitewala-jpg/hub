@@ -37,7 +37,7 @@ const TestsPreview = () => {
         </div>
 
         {/* Tests Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid xs:grid-cols-2 lg:grid-cols-3 gap-4">
           {popularTests.map((test) => (
             <Card key={test.name} className="rounded-xl shadow-sm hover:shadow-md transition-shadow bg-white border border-slate-100 flex flex-col h-full overflow-hidden p-5">
               <div className="flex-grow">

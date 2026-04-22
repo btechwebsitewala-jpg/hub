@@ -147,7 +147,7 @@ const LabSelectionPage = () => {
                   
                   {/* Book Test Button */}
                   <Button 
-                    onClick={handleBookTest}
+                    onClick={() => handleBookTest(lab.name)}
                     className="w-full bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                     size="sm"
                   >

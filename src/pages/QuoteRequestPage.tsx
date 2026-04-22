@@ -15,6 +15,9 @@ import { Calculator, CheckCircle, Building2, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { syncToGoogleSheets } from "@/lib/googleSheets";
+import { sendTelegramMessage } from "@/lib/telegram";
+import { formatINR } from "@/data/testsData";
+import { supabase } from "@/integrations/supabase/client";
 
 const quoteSchema = z.object({
   companyName: z.string().optional(),
@@ -85,11 +88,43 @@ const QuoteRequestPage = () => {
       'Name': data.contactName,
       'Email': data.email,
       'Phone': data.phone,
+      'Price': calculateTotal(),
       'Subject': `Quote Request: ${data.inquiryType}`,
       'Message': `Tests: ${data.tests.join(", ")}\nVolume: ${data.estimatedVolume || 'N/A'}\nNotes: ${data.additionalInfo || 'N/A'}${data.companyName ? `\nCompany: ${data.companyName}` : ''}`,
       'Inquiry Type': data.inquiryType,
       'Status': 'pending',
       'Created At': new Date().toISOString()
+    });
+
+    // Sync to Telegram
+    const telegramMsg = `
+<b>📃 New Quote Request!</b>
+<b>Ref:</b> ${ref}
+<b>Type:</b> ${data.inquiryType}
+<b>Name:</b> ${data.contactName}
+<b>Phone:</b> ${data.phone}
+<b>Email:</b> ${data.email}
+<b>Tests:</b> ${data.tests.join(", ")}
+<b>Estimated Total:</b> ${formatINR(calculateTotal())}
+<b>Volume:</b> ${data.estimatedVolume || 'N/A'}
+${data.companyName ? `<b>Company:</b> ${data.companyName}` : ''}
+<b>Notes:</b> ${data.additionalInfo || 'None'}
+    `.trim();
+    await sendTelegramMessage(telegramMsg);
+
+    // Sync to Supabase for Admin Panel
+    await supabase.from("inquiries").insert({
+      name: data.contactName,
+      email: data.email,
+      phone: data.phone,
+      subject: `Quote Request: ${data.inquiryType} [₹${calculateTotal()}]`,
+      message: `Tests: ${data.tests.join(", ")}\nVolume: ${data.estimatedVolume || 'N/A'}\nNotes: ${data.additionalInfo || 'N/A'}`,
+      company_name: data.companyName || null,
+      estimated_volume: data.estimatedVolume || null,
+      selected_tests: data.tests,
+      inquiry_type: "quote",
+      reference_number: ref,
+      status: "pending"
     });
 
     setQuoteRef(ref);

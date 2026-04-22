@@ -74,14 +74,16 @@ const ResultsInquiryPage = () => {
 
   const onSubmit = async (data: InquiryFormData) => {
     setIsSearching(true);
+    const searchRef = data.referenceNumber.trim();
     try {
-      const { data: aptData } = await supabase
+      // 1. Try Appointments Table (Main Booking)
+      let { data: itemData, error: aptError } = await supabase
         .from("appointments")
         .select("*")
-        .eq("reference_number", data.referenceNumber)
+        .ilike("reference_number", searchRef)
         .maybeSingle();
 
-      if (aptData) {
+      if (itemData) {
         const statusMap: Record<string, ResultStatus> = {
           pending: "pending",
           confirmed: "processing",
@@ -89,56 +91,89 @@ const ResultsInquiryPage = () => {
           cancelled: "not_found",
           no_show: "not_found",
         };
-        const expectedDate = new Date(aptData.appointment_date);
+        const expectedDate = new Date(itemData.appointment_date);
         expectedDate.setDate(expectedDate.getDate() + 2);
         setResult({
-          status: aptData.results_status === "ready" ? "ready" : (statusMap[aptData.status] || "pending"),
-          patientName: `${aptData.first_name} ${aptData.last_name}`,
-          testName: aptData.test_type,
-          collectionDate: new Date(aptData.appointment_date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+          status: itemData.results_status === "ready" ? "ready" : (statusMap[itemData.status] || "pending"),
+          patientName: `${itemData.first_name} ${itemData.last_name}`,
+          testName: itemData.test_type,
+          collectionDate: new Date(itemData.appointment_date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
           expectedDate: expectedDate.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
-          referenceNumber: data.referenceNumber,
+          referenceNumber: searchRef,
           price: 0,
-          time: aptData.time_slot,
-          collection: aptData.sample_collection,
+          time: itemData.time_slot,
+          collection: itemData.sample_collection
         });
-      } else {
-        const { data: tbData } = await supabase
-          .from("test_bookings")
-          .select("*")
-          .eq("reference_number", data.referenceNumber)
-          .maybeSingle();
-
-        if (tbData) {
-          const expectedDate = new Date(tbData.preferred_date);
-          expectedDate.setDate(expectedDate.getDate() + 2);
-          setResult({
-            status: tbData.status === "completed" ? "ready" : "pending",
-            patientName: tbData.patient_name,
-            testName: tbData.test_name,
-            collectionDate: new Date(tbData.preferred_date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
-            expectedDate: expectedDate.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
-            referenceNumber: data.referenceNumber,
-            price: tbData.test_price,
-            time: tbData.preferred_time,
-            collection: tbData.sample_collection,
-          });
-        } else {
-          setResult({
-            status: "not_found",
-            patientName: "",
-            testName: "",
-            collectionDate: "",
-            expectedDate: "",
-            referenceNumber: data.referenceNumber,
-            price: 0,
-            time: "",
-            collection: "",
-          });
-        }
+        setIsSearching(false);
+        return;
       }
-    } catch {
-      toast({ title: "Error", description: "Could not fetch results. Try again.", variant: "destructive" });
+
+      // 2. Try Test Bookings Table (Alternative Booking)
+      let { data: tbData } = await supabase
+        .from("test_bookings")
+        .select("*")
+        .ilike("reference_number", searchRef)
+        .maybeSingle();
+
+      if (tbData) {
+        const expectedDate = new Date(tbData.preferred_date);
+        expectedDate.setDate(expectedDate.getDate() + 2);
+        setResult({
+          status: tbData.status === "completed" ? "ready" : "pending",
+          patientName: tbData.patient_name,
+          testName: tbData.test_name,
+          collectionDate: new Date(tbData.preferred_date).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+          expectedDate: expectedDate.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+          referenceNumber: searchRef,
+          price: tbData.test_price,
+          time: tbData.preferred_time,
+          collection: tbData.sample_collection
+        });
+        setIsSearching(false);
+        return;
+      }
+
+      // 3. Try Inquiries Table (Quotes/General)
+      let { data: inqData } = await supabase
+        .from("inquiries")
+        .select("*")
+        .ilike("reference_number", searchRef)
+        .maybeSingle();
+
+      if (inqData) {
+        const expectedDate = new Date(inqData.created_at);
+        expectedDate.setDate(expectedDate.getDate() + 2);
+        setResult({
+          status: inqData.status === "completed" ? "ready" : "pending",
+          patientName: inqData.name,
+          testName: inqData.subject || "Diagnosis Request",
+          collectionDate: new Date(inqData.created_at).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+          expectedDate: expectedDate.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+          referenceNumber: searchRef,
+          price: 0,
+          time: "N/A",
+          collection: "Quote Request"
+        });
+        setIsSearching(false);
+        return;
+      }
+
+      // Not Found in any table
+      setResult({
+        status: "not_found",
+        patientName: "",
+        testName: "",
+        collectionDate: "",
+        expectedDate: "",
+        referenceNumber: searchRef,
+        price: 0,
+        time: "",
+        collection: ""
+      });
+
+    } catch (error) {
+      console.error("Search error:", error);
+      toast({ title: "Error", description: "Failed to fetch results. Please try again.", variant: "destructive" });
     } finally {
       setIsSearching(false);
     }

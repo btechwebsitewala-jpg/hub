@@ -41,6 +41,11 @@ const CartPage = () => {
                   <div key={item.id} className="bg-white rounded-xl shadow-sm border border-slate-100 p-4 sm:p-5 flex flex-col gap-3">
                     <div className="flex justify-between items-start gap-3">
                       <div className="flex-1">
+                        {item.labName && (
+                          <p className="text-[10px] text-blue-600 font-bold uppercase tracking-wider mb-0.5">
+                            {item.labName}
+                          </p>
+                        )}
                         <h3 className="text-[14px] sm:text-[15px] font-bold text-slate-800 uppercase leading-snug">
                           {item.name} <span className="text-[#3B8B41] whitespace-nowrap inline-block ml-1">{formatINR(item.discountPrice || item.price)}</span>
                         </h3>

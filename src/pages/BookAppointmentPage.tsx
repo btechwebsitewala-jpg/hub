@@ -23,6 +23,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { tests, packages, formatINR } from "@/data/testsData";
 import { useCart } from "@/context/CartContext";
 import { syncToGoogleSheets } from "@/lib/googleSheets";
+import { sendTelegramMessage } from "@/lib/telegram";
 
 const bookingSchema = z.object({
   firstName: z.string().min(2, "First name required").max(50),
@@ -118,7 +119,7 @@ const BookTestPage = () => {
 
   useEffect(() => {
     if (isCartMode) {
-      form.setValue("testType", cartItems.map(item => item.name).join(", "));
+      form.setValue("testType", cartItems.map(item => item.name).join(" | "));
     } else if (preselectedTest) {
       form.setValue("testType", preselectedTest);
     }
@@ -129,6 +130,10 @@ const BookTestPage = () => {
   const selectedPrice = isCartMode
     ? totalAmount
     : (preselectedTotal ? parseInt(preselectedTotal) : (selectedTestData?.price || 0));
+
+  const homeFee = selectedPrice > 0 && selectedPrice < 1000 ? 150 : 0;
+  const sampleCollection = form.watch("sampleCollection");
+  const totalWithFee = sampleCollection === 'home' ? selectedPrice + homeFee : selectedPrice;
 
   const decodedLabName = decodeURIComponent(preselectedLab || "");
   if (decodedLabName) {
@@ -160,6 +165,9 @@ const BookTestPage = () => {
       }
 
 
+      const homeFee = data.sampleCollection === 'home' && selectedPrice < 1000 ? 150 : 0;
+      const totalAmt = selectedPrice + homeFee;
+
       const { error } = await supabase.from("appointments").insert({
         first_name: data.firstName,
         last_name: data.lastName,
@@ -170,7 +178,7 @@ const BookTestPage = () => {
         test_type: effectiveLabName ? `${data.testType} [${effectiveLabName}]` : data.testType,
         sample_collection: data.sampleCollection,
         collection_address: data.address || null,
-        notes: prescriptionUrl ? `${data.notes || ''}\n[Prescription: ${prescriptionUrl}]`.trim() : (data.notes || null),
+        notes: `[Base Price: ₹${selectedPrice}] [Fee: ₹${homeFee}] [Total Price: ₹${totalAmt}] ${prescriptionUrl ? `${data.notes || ''}\n[Prescription: ${prescriptionUrl}]`.trim() : (data.notes || null)}`,
         reference_number: refNum,
         status: "pending",
         user_id: session?.user?.id || null,
@@ -185,6 +193,7 @@ const BookTestPage = () => {
         'Email': data.email,
         'Phone': data.phone,
         'Test Type': effectiveLabName ? `${data.testType} [${effectiveLabName}]` : data.testType,
+        'Price': totalAmt,
         'Appointment Date': format(data.date, "yyyy-MM-dd"),
         'Appointment Time': data.timeSlot,
         'Address': data.address || 'Lab Visit',
@@ -192,6 +201,20 @@ const BookTestPage = () => {
         'Status': 'pending',
         'Created At': new Date().toISOString()
       });
+
+      const telegramMsg = `
+<b>🆕 New Test Booking!</b>
+<b>Ref:</b> ${refNum}
+<b>Patient:</b> ${data.firstName} ${data.lastName}
+<b>Phone:</b> ${data.phone}
+<b>Test:</b> ${effectiveLabName ? `${data.testType} [${effectiveLabName}]` : data.testType}
+<b>Price:</b> ${formatINR(totalAmt)} ${data.sampleCollection === 'home' ? '(inc. fee)' : ''}
+<b>Date:</b> ${format(data.date, "dd MMM yyyy")}
+<b>Time:</b> ${data.timeSlot}
+<b>Address:</b> ${data.address || 'Lab Visit'}
+<b>Notes:</b> ${data.notes || 'None'}
+      `.trim();
+      await sendTelegramMessage(telegramMsg);
 
       setReferenceNumber(refNum);
       if (isCartMode) clearCart();
@@ -401,12 +424,16 @@ const BookTestPage = () => {
                       <div className="p-4 rounded-lg border-2 border-primary/30 bg-primary/5">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="font-medium text-foreground text-sm">Test Price</p>
-                            <p className="text-xs text-muted-foreground">+ ₹99 home collection fee</p>
+                            <p className="font-medium text-foreground text-sm">Test Price Summary</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-2xl font-bold text-primary">{formatINR(selectedPrice)}</p>
-                            <p className="text-xs text-muted-foreground">Total: {formatINR(selectedPrice + 99)}</p>
+                            <p className="text-sm font-bold text-primary">{formatINR(selectedPrice)}</p>
+                            {sampleCollection === 'home' && (
+                              <>
+                                <p className="text-xs text-muted-foreground">+{formatINR(homeFee)} home collection fee</p>
+                                <p className="text-xs text-muted-foreground font-bold">Total: {formatINR(totalWithFee)}</p>
+                              </>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -551,7 +578,7 @@ const BookTestPage = () => {
                         <Home className="h-6 w-6 text-primary" />
                         <div>
                           <p className="font-medium">Home Sample Collection</p>
-                          <p className="text-sm text-muted-foreground">Our phlebotomist will visit your location (+₹99 service fee)</p>
+                          <p className="text-sm text-muted-foreground">Our phlebotomist will visit your location ({homeFee > 0 ? `+${formatINR(homeFee)} service fee` : 'FREE home collection'})</p>
                         </div>
                       </div>
                     </div>
@@ -646,20 +673,24 @@ const BookTestPage = () => {
                         <span className="text-muted-foreground">Test Price</span>
                         <span>{formatINR(selectedPrice)}</span>
                       </div>
-                      <div className="flex justify-between items-center text-sm mb-2">
-                        <span className="text-muted-foreground">Home Collection Fee</span>
-                        <span>₹99</span>
+                      <div className="flex justify-between items-center text-sm font-medium text-slate-600">
+                        <span>Home Collection Fee</span>
+                        <span>{sampleCollection === 'home' ? (homeFee > 0 ? formatINR(homeFee) : 'FREE') : formatINR(0)}</span>
                       </div>
-                      <div className="border-t border-primary/20 pt-2 flex justify-between items-center">
-                        <span className="font-semibold text-foreground">Total</span>
-                        <span className="text-xl font-bold text-primary">{formatINR(selectedPrice + 99)}</span>
+                      <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-sm font-bold text-slate-800">
+                        <span>Total Amount</span>
+                        <span className="text-xl font-bold text-primary">{formatINR(totalWithFee)}</span>
                       </div>
+
+                      <Button 
+                        type="submit" 
+                        className="w-full mt-6 bg-[#004A99] hover:bg-[#003B73] h-12 text-[15px] rounded-lg font-semibold"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? "Booking..." : `Book Test${selectedPrice > 0 ? ` - ${formatINR(totalWithFee)}` : ''}`}
+                      </Button>
                     </div>
                   )}
-
-                  <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-                    {isSubmitting ? "Booking..." : `Book Test${selectedPrice > 0 ? ` - ${formatINR(selectedPrice + 99)}` : ''}`}
-                  </Button>
                 </form>
               </Form>
             </CardContent>

@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { syncToGoogleSheets } from "@/lib/googleSheets";
+import { sendTelegramMessage } from "@/lib/telegram";
 
 const WHATSAPP_NUMBER = "917649885936";
 const INSTAGRAM_URL = "https://www.instagram.com/diagnostics_hub?igsh=MzNzanJpN2tlODhs";
@@ -90,6 +91,18 @@ const ContactPage = () => {
         'Status': 'pending',
         'Created At': new Date().toISOString()
       });
+
+      // Sync to Telegram
+      const telegramMsg = `
+<b>❓ New Inquiry!</b>
+<b>Ref:</b> ${refNum}
+<b>Name:</b> ${data.name}
+<b>Email:</b> ${data.email}
+<b>Phone:</b> ${data.phone || 'N/A'}
+<b>Subject:</b> ${data.subject}
+<b>Message:</b> ${data.message}
+      `.trim();
+      await sendTelegramMessage(telegramMsg);
 
       toast({
         title: "Message sent!",

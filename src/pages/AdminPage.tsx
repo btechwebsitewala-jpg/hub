@@ -34,6 +34,26 @@ import {
   TestTube2
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { generateReceipt } from "@/utils/receiptGenerator";
+import { tests, packages, formatINR } from "@/data/testsData";
+import { labTests } from "@/data/labTests";
+import { drLalTests } from "@/data/drLalTests";
+import { metropolisTests } from "@/data/metropolisTests";
+
+const allTestCatalogs = [
+  ...tests as any[],
+  ...packages as any[],
+  ...labTests as any[],
+  ...drLalTests as any[],
+  ...metropolisTests as any[]
+];
+
+const getTestPrice = (name: string): number => {
+  const normalizedName = name.trim().toUpperCase();
+  const searchName = normalizedName.split(' [')[0].trim(); // Remove lab suffix if present
+  const found = allTestCatalogs.find(t => t.name.trim().toUpperCase() === searchName);
+  return found?.price || 0;
+};
 
 /* ─── Prescription Viewer Component ─── */
 const PrescriptionViewer = ({ notes, referenceNumber }: { notes: string; referenceNumber: string }) => {
@@ -139,6 +159,8 @@ const AdminPage = () => {
   const [responseText, setResponseText] = useState("");
   const [uploadingReport, setUploadingReport] = useState(false);
   const [reportFile, setReportFile] = useState<File | null>(null);
+  const [discountAmount, setDiscountAmount] = useState<string>("0");
+  const [savingBilling, setSavingBilling] = useState(false);
 
   useEffect(() => {
     if (isAdmin) fetchData();
@@ -214,6 +236,99 @@ const AdminPage = () => {
     toast({ title: "Updated", description: "Test booking status updated." });
     fetchData();
     setDetailsOpen(false);
+  };
+
+  const updateBilling = async () => {
+    if (!selectedItem) return;
+    setSavingBilling(true);
+    try {
+      const table = selectedItem.type === 'appointment' ? 'appointments' : (selectedItem.type === 'booking' ? 'test_bookings' : null);
+      if (!table) return;
+
+      const currentNotes = selectedItem.type === 'appointment' ? (selectedItem.admin_notes || "") : (selectedItem.notes || "");
+      const newNote = currentNotes.includes("[Discount:") 
+        ? currentNotes.replace(/\[Discount: \d+\]/, `[Discount: ${discountAmount}]`)
+        : `${currentNotes} [Discount: ${discountAmount}]`.trim();
+
+      const { error } = await supabase.from(table).update({
+        [selectedItem.type === 'appointment' ? 'admin_notes' : 'notes']: newNote
+      }).eq("id", selectedItem.id);
+
+      if (error) throw error;
+      toast({ title: "Success", description: "Billing updated successfully!" });
+      fetchData();
+      setSelectedItem({ ...selectedItem, [selectedItem.type === 'appointment' ? 'admin_notes' : 'notes']: newNote });
+    } catch (err: any) {
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    } finally {
+      setSavingBilling(false);
+    }
+  };
+
+  const handleDownloadReceipt = async (item: any) => {
+    const isAppt = item.type === 'appointment';
+    const isBooking = item.type === 'booking';
+    const labMatch = isAppt ? item.test_type?.match(/\[(.*?)\]/) : null;
+    const extractedLabName = labMatch ? labMatch[1] : (item.lab_name || null);
+
+    let testPrice = 0;
+    let collectionFee = 0;
+    const isHome = item.sample_collection === 'home';
+
+    if (isAppt) {
+      const baseMatch = item.notes?.match(/\[Base Price: ₹(\d+)\]/);
+      const feeMatch = item.notes?.match(/\[Fee: ₹(\d+)\]/);
+      const totalMatch = item.notes?.match(/\[Total Price: ₹(\d+)\]/);
+      
+      if (baseMatch && feeMatch) {
+          testPrice = parseInt(baseMatch[1]);
+          collectionFee = parseInt(feeMatch[1]);
+      } else {
+          const totalStored = totalMatch ? parseInt(totalMatch[1]) : 0;
+          if (isHome) {
+              // Threshold logic for legacy data
+              if (totalStored < 1000) {
+                  collectionFee = totalStored >= 150 ? 150 : 0;
+                  testPrice = totalStored - collectionFee;
+              } else {
+                  collectionFee = 0;
+                  testPrice = totalStored;
+              }
+          } else {
+              testPrice = totalStored;
+              collectionFee = 0;
+          }
+      }
+    } else if (isBooking) {
+      testPrice = item.test_price || 0;
+      collectionFee = (isHome && testPrice < 1000) ? 150 : 0;
+    }
+
+    const discountMatch = (isAppt ? (item.admin_notes || "") : (item.notes || "")).match(/\[Discount: (\d+)\]/);
+    const discount = discountMatch ? parseInt(discountMatch[1]) : 0;
+
+    const testsList = isAppt ? item.test_type.split(' [')[0].split('|').map((t: string) => t.trim()).filter((t: string) => t !== "") : [item.test_name];
+    const individualPrices = testsList.map((t: string) => getTestPrice(t));
+
+    const data = {
+      referenceNumber: item.reference_number,
+      bookingDate: new Date(item.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
+      patientName: isAppt ? `${item.first_name} ${item.last_name}` : item.patient_name,
+      patientEmail: item.email,
+      patientPhone: isAppt ? item.phone : item.patient_phone,
+      patientAddress: isAppt ? item.collection_address : item.patient_address,
+      testName: isAppt ? item.test_type.split(' [')[0] : item.test_name,
+      labName: extractedLabName,
+      testPrice: testPrice,
+      collectionFee: collectionFee,
+      discount: discount,
+      sampleCollection: isHome ? 'Home' : 'Lab Visit',
+      appointmentDate: new Date(isAppt ? item.appointment_date : item.preferred_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+      appointmentTime: isAppt ? item.time_slot : (item.preferred_time || "N/A"),
+      individualPrices: individualPrices,
+    };
+
+    await generateReceipt(data);
   };
 
   const handleReportUpload = async (appointmentId: string) => {
@@ -294,6 +409,12 @@ const AdminPage = () => {
   const openDetails = (item: any, type: string) => {
     setSelectedItem({ ...item, type });
     setResponseText(item.admin_response || "");
+    
+    // Parse discount
+    const currentNotes = type === 'appointment' ? (item.admin_notes || "") : (item.notes || "");
+    const discountMatch = currentNotes.match(/\[Discount: (\d+)\]/);
+    setDiscountAmount(discountMatch ? discountMatch[1] : "0");
+    
     setDetailsOpen(true);
   };
 
@@ -547,6 +668,7 @@ const AdminPage = () => {
                   <TableHead>Reference</TableHead>
                   <TableHead>Patient</TableHead>
                   <TableHead>Test</TableHead>
+                  <TableHead>Price</TableHead>
                   <TableHead>Date & Time</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Actions</TableHead>
@@ -569,14 +691,33 @@ const AdminPage = () => {
                           <p className="text-xs text-muted-foreground">{apt.email}</p>
                         </div>
                       </TableCell>
-                      <TableCell>{apt.test_type}</TableCell>
+                      <TableCell className="max-w-[200px] truncate">{apt.test_type}</TableCell>
+                      <TableCell className="font-semibold text-success">
+                        {apt.notes?.includes('[Total Price: ₹') ? `₹${apt.notes.match(/\[Total Price: ₹(\d+)\]/)?.[1]}` : 'N/A'}
+                      </TableCell>
                       <TableCell>
                         <div>
                           <p>{new Date(apt.appointment_date).toLocaleDateString('en-IN')}</p>
                           <p className="text-xs text-muted-foreground">{apt.time_slot}</p>
                         </div>
                       </TableCell>
-                      <TableCell>{getStatusBadge(apt.status)}</TableCell>
+                      <TableCell>
+                        <Select
+                          defaultValue={apt.status}
+                          onValueChange={(val) => updateAppointmentStatus(apt.id, val as any)}
+                        >
+                          <SelectTrigger className="w-[120px] h-8 text-xs border-none bg-transparent hover:bg-slate-100 p-0 shadow-none">
+                            <SelectValue>{getStatusBadge(apt.status)}</SelectValue>
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="confirmed">Confirmed</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
+                            <SelectItem value="cancelled">Cancelled</SelectItem>
+                            <SelectItem value="no_show">No Show</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
                       <TableCell>
                         <Button size="sm" variant="ghost" onClick={() => openDetails(apt, 'appointment')}>
                           <Eye className="h-4 w-4" />
@@ -620,6 +761,7 @@ const AdminPage = () => {
                 <TableRow>
                   <TableHead>Reference</TableHead>
                   <TableHead>Type</TableHead>
+                  <TableHead>Price</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Contact</TableHead>
                   <TableHead>Status</TableHead>
@@ -638,6 +780,9 @@ const AdminPage = () => {
                     <TableRow key={inq.id}>
                       <TableCell className="font-mono text-sm">{inq.reference_number}</TableCell>
                       <TableCell><Badge variant="outline">{inq.inquiry_type}</Badge></TableCell>
+                      <TableCell className="font-semibold text-success">
+                        {inq.subject?.includes('[₹') ? `₹${inq.subject.match(/\[₹(\d+)\]/)?.[1]}` : 'N/A'}
+                      </TableCell>
                       <TableCell className="font-medium">{inq.name}</TableCell>
                       <TableCell>
                         <div>
@@ -645,7 +790,22 @@ const AdminPage = () => {
                           <p className="text-xs text-muted-foreground">{inq.phone}</p>
                         </div>
                       </TableCell>
-                      <TableCell>{getStatusBadge(inq.status)}</TableCell>
+                      <TableCell>
+                        <Select
+                          defaultValue={inq.status}
+                          onValueChange={(val) => updateInquiryStatus(inq.id, val as any)}
+                        >
+                          <SelectTrigger className="w-[120px] h-8 text-xs border-none bg-transparent hover:bg-slate-100 p-0 shadow-none">
+                            <SelectValue>{getStatusBadge(inq.status)}</SelectValue>
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="in_progress">In Progress</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
+                            <SelectItem value="cancelled">Cancelled</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
                       <TableCell>
                         <Button size="sm" variant="ghost" onClick={() => openDetails(inq, 'inquiry')}>
                           <Eye className="h-4 w-4" />
@@ -716,7 +876,26 @@ const AdminPage = () => {
                       <TableCell>{booking.test_name}</TableCell>
                       <TableCell>{new Date(booking.preferred_date).toLocaleDateString('en-IN')}</TableCell>
                       <TableCell>₹{booking.test_price}</TableCell>
-                      <TableCell>{getStatusBadge(booking.status)}</TableCell>
+                      <TableCell>
+                        <Select
+                          defaultValue={booking.status}
+                          onValueChange={async (val) => {
+                            await supabase.from('test_bookings').update({ status: val }).eq('id', booking.id);
+                            fetchData();
+                            toast({ title: "Status Updated", description: `Booking status changed to ${val}.` });
+                          }}
+                        >
+                          <SelectTrigger className="w-[120px] h-8 text-xs border-none bg-transparent hover:bg-slate-100 p-0 shadow-none">
+                            <SelectValue>{getStatusBadge(booking.status)}</SelectValue>
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="confirmed">Confirmed</SelectItem>
+                            <SelectItem value="completed">Completed</SelectItem>
+                            <SelectItem value="cancelled">Cancelled</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </TableCell>
                       <TableCell>
                         <Button size="sm" variant="ghost" onClick={() => openDetails(booking, 'booking')}>
                           <Eye className="h-4 w-4" />
@@ -857,7 +1036,7 @@ const AdminPage = () => {
                       <TestTube2 className="h-4 w-4 text-primary" /> Booked Tests Summary
                     </p>
                     <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold text-[10px]">
-                      {selectedItem.test_type.split(' [')[0].split(/[|,]/).filter(t => t.trim() !== "").length} Items
+                      {selectedItem.test_type.split(' [')[0].split('|').filter(t => t.trim() !== "").length} Items
                     </Badge>
                   </div>
 
@@ -867,15 +1046,32 @@ const AdminPage = () => {
                         <tr>
                           <th className="px-3 py-2 font-bold text-slate-600 w-12 text-center">#</th>
                           <th className="px-3 py-2 font-bold text-slate-600">Test / Package Name</th>
+                          <th className="px-3 py-2 font-bold text-slate-600 text-right">Price</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
-                        {selectedItem.test_type.split(' [')[0].split(/[|,]/).map(t => t.trim()).filter(t => t !== "").map((test, index) => (
-                          <tr key={index} className="hover:bg-slate-50/50 transition-colors">
-                            <td className="px-3 py-2.5 font-bold text-primary border-r border-slate-100 text-center">{index + 1}</td>
-                            <td className="px-3 py-2.5 font-medium text-slate-700">{test}</td>
-                          </tr>
-                        ))}
+                        {(() => {
+                          const testsList = selectedItem.test_type.split(' [')[0].split('|').map(t => t.trim()).filter(t => t !== "");
+                          const total = testsList.reduce((acc, t) => acc + getTestPrice(t), 0);
+                          return (
+                            <>
+                              {testsList.map((test, index) => {
+                                const price = getTestPrice(test);
+                                return (
+                                  <tr key={index} className="hover:bg-slate-50/50 transition-colors">
+                                    <td className="px-3 py-2.5 font-bold text-primary border-r border-slate-100 text-center">{index + 1}</td>
+                                    <td className="px-3 py-2.5 font-medium text-slate-700">{test}</td>
+                                    <td className="px-3 py-2.5 font-bold text-slate-900 text-right">{formatINR(price)}</td>
+                                  </tr>
+                                );
+                              })}
+                              <tr className="bg-slate-50 font-bold border-t-2 border-slate-200">
+                                <td colSpan={2} className="px-3 py-3 text-slate-700 text-right">Total Tests Cost:</td>
+                                <td className="px-3 py-3 text-primary text-right text-base">{formatINR(total)}</td>
+                              </tr>
+                            </>
+                          );
+                        })()}
                       </tbody>
                     </table>
                   </div>
@@ -937,7 +1133,33 @@ const AdminPage = () => {
                 )}
               </div>
 
-              <DialogFooter className="flex-wrap gap-2">
+              {/* Billing Section */}
+              <div className="border-t pt-4 space-y-3">
+                <p className="text-sm font-medium flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4" />
+                  Billing & Discount
+                </p>
+                <div className="flex gap-4 items-end">
+                  <div className="flex-1">
+                    <label className="text-xs text-muted-foreground">Add Discount (₹)</label>
+                    <Input 
+                      type="number" 
+                      value={discountAmount} 
+                      onChange={(e) => setDiscountAmount(e.target.value)}
+                      placeholder="Enter discount amount"
+                    />
+                  </div>
+                  <Button onClick={updateBilling} disabled={savingBilling} variant="outline">
+                    {savingBilling ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Billing"}
+                  </Button>
+                </div>
+              </div>
+
+              <DialogFooter className="flex-wrap gap-2 pt-4 border-t">
+                <Button onClick={() => handleDownloadReceipt(selectedItem)} className="bg-success hover:bg-success/90">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download Receipt
+                </Button>
                 <Select onValueChange={(val) => updateAppointmentStatus(selectedItem.id, val as any)}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Update Status" />
@@ -1055,7 +1277,33 @@ const AdminPage = () => {
                   <p>{selectedItem.patient_address}</p>
                 </div>
               </div>
-              <DialogFooter className="flex-wrap gap-2">
+              {/* Billing Section for Bookings */}
+              <div className="border-t pt-4 space-y-3">
+                <p className="text-sm font-medium flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4" />
+                  Billing & Discount
+                </p>
+                <div className="flex gap-4 items-end">
+                  <div className="flex-1">
+                    <label className="text-xs text-muted-foreground">Add Discount (₹)</label>
+                    <Input 
+                      type="number" 
+                      value={discountAmount} 
+                      onChange={(e) => setDiscountAmount(e.target.value)}
+                      placeholder="Enter discount amount"
+                    />
+                  </div>
+                  <Button onClick={updateBilling} disabled={savingBilling} variant="outline">
+                    {savingBilling ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Billing"}
+                  </Button>
+                </div>
+              </div>
+
+              <DialogFooter className="flex-wrap gap-2 pt-4 border-t">
+                <Button onClick={() => handleDownloadReceipt(selectedItem)} className="bg-success hover:bg-success/90">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download Receipt
+                </Button>
                 <Select onValueChange={(val) => updateTestBookingStatus(selectedItem.id, val)}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Update Status" />

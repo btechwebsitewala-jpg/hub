@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Shield, Clock, Award, ArrowRight, CheckCircle2, FlaskConical, MessageCircle, FileUp } from "lucide-react";
-import { BannerCarousel } from "./BannerCarousel";
 import pathologyLabImg from "@/assets/pathology-lab-hero.jpg";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -30,13 +29,11 @@ const HeroSection = () => {
       </div>
 
       <div className="container relative z-10">
+
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
           {/* Left Content */}
           <div className="animate-fade-in flex flex-col items-start">
-
-            {/* Banner Slider */}
-            <BannerCarousel />
 
             {/* Premium Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 backdrop-blur-md border border-white/80 shadow-[0_2px_10px_rgba(0,0,0,0.03)] text-[#003B73] font-bold text-sm mb-7 hover:shadow-md transition-all cursor-default">
@@ -45,23 +42,23 @@ const HeroSection = () => {
             </div>
 
             {/* Gradient Headline */}
-            <h1 className="text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold text-[#002B54] leading-[1.05] mb-6 tracking-tight drop-shadow-sm">
+            <h1 className="text-[clamp(2.25rem,6vw,4.5rem)] font-extrabold text-[#002B54] leading-[1.1] mb-6 tracking-tight drop-shadow-sm text-balance">
               Accurate Diagnostics for{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#004A99] via-[#0066CC] to-[#38BDF8]">
                 Better Health
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl font-medium leading-relaxed">
+            <p className="text-base md:text-lg lg:text-xl text-slate-600 mb-8 md:mb-10 max-w-xl font-medium leading-relaxed">
               State-of-the-art pathology services with 100+ diagnostic tests, quick turnaround times, and trusted results. Your health is our priority.
             </p>
 
             {/* Elevated Buttons */}
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 mb-10 md:mb-12 w-full sm:w-auto">
               <Button
                 size="lg"
                 onClick={() => navigate("/tests")}
-                className="gap-2 bg-[#003B73] hover:bg-[#002B54] text-white text-base h-14 px-8 rounded-full shadow-[0_8px_20px_rgba(0,59,115,0.25)] hover:shadow-[0_10px_25px_rgba(0,59,115,0.35)] transition-all hover:-translate-y-0.5 active:translate-y-0"
+                className="w-full sm:w-auto gap-2 bg-[#003B73] hover:bg-[#002B54] text-white text-base h-14 px-8 rounded-full shadow-[0_8px_20px_rgba(0,59,115,0.25)] hover:shadow-[0_10px_25px_rgba(0,59,115,0.35)] transition-all hover:-translate-y-0.5 active:translate-y-0"
               >
                 Book Test Now
                 <ArrowRight className="h-4 w-4" />
@@ -70,7 +67,7 @@ const HeroSection = () => {
                 size="lg"
                 variant="outline"
                 onClick={handleWhatsAppChat}
-                className="gap-2 bg-success/10 border-2 border-success/20 hover:border-success/50 text-success hover:bg-success hover:text-white text-base h-14 px-8 rounded-full shadow-sm hover:shadow-md transition-all whitespace-nowrap"
+                className="w-full sm:w-auto gap-2 bg-success/10 border-2 border-success/20 hover:border-success/50 text-success hover:bg-success hover:text-white text-base h-14 px-8 rounded-full shadow-sm hover:shadow-md transition-all whitespace-nowrap"
               >
                 <FileUp className="h-5 w-5" />
                 Upload Dr. Prescription
@@ -78,19 +75,19 @@ const HeroSection = () => {
             </div>
 
             {/* Modern Trust Indicators */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl">
+            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 w-full max-w-2xl">
               {[
                 { icon: Shield, label: "99.9%", sub: "Accuracy", color: "text-[#003B73]", bg: "bg-[#003B73]/10" },
                 { icon: Clock, label: "Same Day", sub: "Reports", color: "text-[#3B8B41]", bg: "bg-[#3B8B41]/10" },
                 { icon: FlaskConical, label: "100+", sub: "Tests", color: "text-[#DE6F53]", bg: "bg-[#DE6F53]/10" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3.5 bg-white/60 backdrop-blur-sm border border-white/60 p-3.5 rounded-2xl shadow-sm hover:bg-white hover:shadow-md transition-all">
-                  <div className={`h-12 w-12 rounded-xl ${item.bg} flex items-center justify-center shrink-0`}>
-                    <item.icon className={`h-6 w-6 ${item.color}`} />
+                <div key={i} className="flex items-center gap-3 bg-white/60 backdrop-blur-sm border border-white/60 p-3 rounded-2xl shadow-sm hover:bg-white hover:shadow-md transition-all">
+                  <div className={`h-10 w-10 md:h-12 md:w-12 rounded-xl ${item.bg} flex items-center justify-center shrink-0`}>
+                    <item.icon className={`h-5 w-5 md:h-6 md:w-6 ${item.color}`} />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-extrabold text-slate-800 text-[15px] leading-tight">{item.label}</span>
-                    <span className="text-[13px] font-medium text-slate-500">{item.sub}</span>
+                    <span className="font-extrabold text-slate-800 text-sm md:text-[15px] leading-tight">{item.label}</span>
+                    <span className="text-[11px] md:text-[13px] font-medium text-slate-500">{item.sub}</span>
                   </div>
                 </div>
               ))}
@@ -98,18 +95,16 @@ const HeroSection = () => {
           </div>
 
           {/* Right Content - Hero Image */}
-          <div className="relative animate-slide-in-left lg:ml-auto" style={{ animationDelay: "0.2s" }}>
+          <div className="relative animate-slide-in-left lg:ml-auto w-full max-w-[600px] mx-auto lg:mx-0" style={{ animationDelay: "0.2s" }}>
             {/* Image Glowing Backdrop */}
-            <div className="absolute -inset-1 bg-gradient-to-tr from-[#38BDF8] to-[#4ADE80] rounded-[2rem] blur-xl opacity-30 animate-pulse" />
+            <div className="absolute -inset-1 bg-gradient-to-tr from-[#38BDF8] to-[#4ADE80] rounded-[1.5rem] md:rounded-[2rem] blur-xl opacity-30 animate-pulse" />
 
-            <div className="relative rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white">
+            <div className="relative rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white">
               <img
                 src={pathologyLabImg}
-                alt="Modern pathology laboratory with advanced diagnostic equipment"
-                className="w-full lg:w-[550px] aspect-[4/3] object-cover hover:scale-105 transition-transform duration-700 ease-in-out"
+                alt="Modern pathology laboratory"
+                className="w-full aspect-[4/3] object-cover hover:scale-105 transition-transform duration-700 ease-in-out"
                 loading="eager"
-                decoding="async"
-                fetchPriority="high"
                 width={600}
                 height={450}
               />
@@ -117,14 +112,14 @@ const HeroSection = () => {
             </div>
 
             {/* Premium Glassmorphic Floating Card */}
-            <div className="absolute -bottom-8 -left-8 sm:-left-12 bg-white/80 backdrop-blur-xl border border-white/50 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.12)] p-4 sm:p-5 pr-8 animate-fade-in hover:-translate-y-1 transition-transform cursor-default" style={{ animationDelay: "0.5s" }}>
-              <div className="flex items-center gap-4">
-                <div className="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-gradient-to-br from-[#3B8B41] to-[#2a6830] flex items-center justify-center shrink-0 shadow-lg shadow-green-900/20">
-                  <CheckCircle2 className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
+            <div className="absolute -bottom-4 -left-4 sm:-bottom-8 sm:-left-8 bg-white/90 backdrop-blur-xl border border-white/50 rounded-xl md:rounded-2xl shadow-xl p-3 sm:p-5 animate-fade-in hover:-translate-y-1 transition-transform cursor-default z-20" style={{ animationDelay: "0.5s" }}>
+              <div className="flex items-center gap-3 md:gap-4">
+                <div className="h-10 w-10 md:h-14 md:w-14 rounded-full bg-gradient-to-br from-[#3B8B41] to-[#2a6830] flex items-center justify-center shrink-0 shadow-lg shadow-green-900/20">
+                  <CheckCircle2 className="h-5 w-5 md:h-7 md:w-7 text-white" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold text-slate-800 text-[15px] sm:text-lg leading-tight mb-0.5">NABL Certified</span>
-                  <span className="text-sm font-medium text-slate-500">Quality Assured Lab</span>
+                  <span className="font-bold text-slate-800 text-sm md:text-lg leading-tight">NABL Certified</span>
+                  <span className="text-[11px] md:text-sm font-medium text-slate-500">Quality Assured Lab</span>
                 </div>
               </div>
             </div>
