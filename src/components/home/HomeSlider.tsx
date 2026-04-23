@@ -30,27 +30,21 @@ const HomeSlider = () => {
   }, [api]);
 
   return (
-    <section className="relative w-full pb-10 lg:pb-16 animate-fade-in overflow-hidden bg-gradient-to-b from-[#F4F9FF] to-white">
-      {/* Dynamic Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-[10%] -left-[5%] w-[30%] h-[50%] rounded-full bg-[#38BDF8]/10 blur-[80px] animate-pulse" />
-        <div className="absolute bottom-[20%] -right-[5%] w-[35%] h-[40%] rounded-full bg-[#003B73]/5 blur-[100px]" />
-      </div>
-
+    <section className="relative w-full pb-4 animate-fade-in overflow-hidden bg-[#F4F9FF]">
       <div className="w-full lg:max-w-[1500px] lg:mx-auto lg:px-4">
         <Carousel 
           setApi={setApi}
           opts={{ 
             loop: true,
             align: "start",
-            duration: 40, // Smoother, slower transitions
+            duration: 40,
           }}
           className="w-full relative group"
         >
           <CarouselContent className="-ml-0 lg:-ml-4">
             {images.map((img, index) => (
               <CarouselItem key={index} className="pl-0 lg:pl-4">
-                <div className="relative w-full overflow-hidden shadow-sm lg:rounded-[2.5rem] lg:shadow-2xl lg:border-[6px] lg:border-white bg-white group/banner">
+                <div className="relative w-full overflow-hidden shadow-sm lg:rounded-[2.5rem] lg:shadow-2xl lg:border-[6px] lg:border-white bg-[#F4F9FF] group/banner">
                   <img 
                     src={img} 
                     alt={`Banner ${index + 1}`} 
