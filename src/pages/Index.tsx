@@ -11,6 +11,7 @@ import PartnerLabs from "@/components/home/PartnerLabs";
 import WhyChooseSection from "@/components/home/WhyChooseSection";
 import AboutPreview from "@/components/home/AboutPreview";
 import CTASection from "@/components/home/CTASection";
+import HomeSlider from "@/components/home/HomeSlider";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
       <OfferBanner />
       <CitySelector />
       <Layout>
+        <HomeSlider />
         <HeroSection />
         <DiagnosticShowcase />
         <PartnerLabs />
