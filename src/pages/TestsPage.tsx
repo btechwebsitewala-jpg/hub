@@ -8,6 +8,7 @@ import { LabLogos } from "@/components/ui/LabLogos";
 import { labTests } from "@/data/labTests";
 import { drLalTests } from "@/data/drLalTests";
 import { metropolisTests } from "@/data/metropolisTests";
+import { pathkindTests } from "@/data/pathkindTests";
 import { useCart } from "@/context/CartContext";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import { generateSlug } from "@/data/testsData";
@@ -55,7 +56,9 @@ export default function DiagnosticsUI() {
       ? (drLalTests as typeof labTests)
       : selectedLab === "Metropolis Healthcare"
         ? (metropolisTests as typeof labTests)
-        : labTests;
+        : selectedLab === "Pathkind Labs"
+          ? (pathkindTests as typeof labTests)
+          : labTests;
 
     const filteredTests = activeTests.filter(test => {
       const matchesSearch = test.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -144,11 +147,16 @@ export default function DiagnosticsUI() {
                       )}
                     </div>
 
-                    <div className="flex items-center gap-4 mb-4">
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
                       {test.homeCollection && (
                         <span className="flex items-center gap-1.5 text-xs font-semibold text-[#3B8B41]">
                           <span className="flex items-center justify-center bg-[#3B8B41] text-white rounded-full w-3.5 h-3.5 text-[9px] font-bold">✓</span>
                           Home Collection
+                        </span>
+                      )}
+                      {test.testCategory && (
+                        <span className="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded-md font-bold border border-blue-100 uppercase">
+                          {test.testCategory}
                         </span>
                       )}
                     </div>

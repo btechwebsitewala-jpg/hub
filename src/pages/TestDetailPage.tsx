@@ -6,6 +6,7 @@ import { ArrowLeft, CheckCircle2, Eye } from "lucide-react";
 import { labTests } from "@/data/labTests";
 import { drLalTests } from "@/data/drLalTests";
 import { metropolisTests } from "@/data/metropolisTests";
+import { pathkindTests } from "@/data/pathkindTests";
 import { formatINR, generateSlug, tests as genericTests, packages } from "@/data/testsData";
 import { useCart } from "@/context/CartContext";
 
@@ -24,6 +25,8 @@ const TestDetailPage = () => {
     test = drLalTests.find(t => generateSlug(t.name) === testSlug);
   } else if (selectedLab === "Metropolis Healthcare") {
     test = metropolisTests.find(t => generateSlug(t.name) === testSlug);
+  } else if (selectedLab === "Pathkind Labs") {
+    test = pathkindTests.find(t => generateSlug(t.name) === testSlug);
   } else {
     test = labTests.find(t => generateSlug(t.name) === testSlug);
     if (!test) {
@@ -99,7 +102,11 @@ const TestDetailPage = () => {
                     <span className="flex items-center gap-1.5 text-xs font-semibold text-[#3B8B41]">
                       <CheckCircle2 className="w-3.5 h-3.5" /> Home Collection
                     </span>
-
+                    {test.testCategory && (
+                      <span className="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded-md font-bold border border-blue-100 uppercase">
+                        {test.testCategory}
+                      </span>
+                    )}
                   </div>
                 </div>
 

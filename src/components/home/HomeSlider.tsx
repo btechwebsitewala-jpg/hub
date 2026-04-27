@@ -24,7 +24,7 @@ const HomeSlider = () => {
 
     const intervalId = setInterval(() => {
       api.scrollNext();
-    }, 4000);
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, [api]);

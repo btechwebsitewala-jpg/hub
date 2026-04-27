@@ -8,6 +8,7 @@ export interface LabTest {
   fastingRequired: boolean;
   homeCollection: boolean;
   includedTests?: string[];
+  testCategory?: string;
 }
 
 const realTestsData = [

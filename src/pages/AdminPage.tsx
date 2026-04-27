@@ -39,13 +39,15 @@ import { tests, packages, formatINR } from "@/data/testsData";
 import { labTests } from "@/data/labTests";
 import { drLalTests } from "@/data/drLalTests";
 import { metropolisTests } from "@/data/metropolisTests";
+import { pathkindTests } from "@/data/pathkindTests";
 
 const allTestCatalogs = [
   ...tests as any[],
   ...packages as any[],
   ...labTests as any[],
   ...drLalTests as any[],
-  ...metropolisTests as any[]
+  ...metropolisTests as any[],
+  ...pathkindTests as any[]
 ];
 
 const getTestPrice = (name: string): number => {
